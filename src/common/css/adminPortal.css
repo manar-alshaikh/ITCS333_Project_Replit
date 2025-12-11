@@ -1,0 +1,332 @@
+/* ================================================
+   NEON THEME ROOT
+================================================= */
+
+:root {
+    --primary: #00ffff;
+    --secondary: #ff00ff;
+    --accent: #7c3aed;
+    --dark: #0a0a0f;
+    --darker: #050508;
+    --light: #ffffff;
+    --gray: #9ca3af;
+    --success: #00ff88;
+    --danger: #ff4444;
+}
+
+/* ================================================
+   BASE
+================================================= */
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--darker);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: var(--light);
+}
+
+/* ================================================
+   HEADER
+================================================= */
+
+.header {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 2rem 2rem;
+    margin-left: 3.5rem;
+    border-radius: 0 0 20px 20px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.10);
+}
+
+.header h1 {
+    font-size: 2rem;
+    margin: 0;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ================================================
+   NAVIGATION
+================================================= */
+
+.nav {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem 2rem;
+    margin: 1.5rem 3.5rem;
+    border-radius: 14px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.08);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left,
+.nav-right {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav a {
+    color: var(--primary);
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    transition: 0.3s ease;
+    text-shadow: 0 0 6px rgba(0,255,255,0.6);
+}
+
+.nav a:hover {
+    color: var(--secondary);
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 12px rgba(255,0,255,0.4);
+}
+
+/* ================================================
+   WELCOME BOX (Dashboard)
+================================================= */
+
+.welcome-box {
+    margin: 2rem 3.5rem;
+    padding: 2rem;
+
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(14px);
+
+    box-shadow: 0 0 20px rgba(0,255,255,0.12);
+}
+
+.welcome-box h2 {
+    margin: 0 0 10px 0;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ================================================
+   DASHBOARD CARDS
+================================================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 2rem;
+    padding: 2rem 3.5rem;
+}
+
+.card {
+    padding: 2rem;
+
+    border-radius: 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+
+    box-shadow: 0 0 20px rgba(0,255,255,0.10);
+    backdrop-filter: blur(12px);
+
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 0 25px rgba(0,255,255,0.25),
+        0 0 35px rgba(255,0,255,0.25);
+}
+
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 0.6rem;
+    font-size: 1.4rem;
+
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ================================================
+   BUTTONS
+================================================= */
+
+button,
+.card button {
+    padding: 0.8rem 1.3rem;
+    border: none;
+    border-radius: 25px;
+
+    font-size: 1rem;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    color: var(--dark);
+
+    transition: 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,255,255,0.3);
+}
+
+button.danger {
+    background: linear-gradient(45deg, #ff0044, #ff00aa);
+    color: var(--light);
+}
+
+/* ================================================
+   INPUTS & FORM ELEMENTS
+================================================= */
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    margin-top: 0.5rem;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.22);
+
+    background: rgba(255,255,255,0.14);
+    color: var(--light);
+
+    transition: 0.25s ease;
+    caret-color: var(--secondary);
+}
+
+input:focus {
+    outline: none;
+    color: var(--secondary);
+    background: rgba(255,255,255,0.20);
+    border-color: var(--secondary);
+    box-shadow: 0 0 12px rgba(255,0,255,0.55);
+}
+
+input::placeholder {
+    color: rgba(255, 0, 255, 0.45);
+}
+
+/* ================================================
+   ADD STUDENT / EDIT STUDENT BOXES
+================================================= */
+
+.add-student-box,
+.edit-form,
+.password-box {
+    background: rgba(255,255,255,0.05);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    margin: 1.5rem 0;
+}
+
+.add-student-box h3,
+.edit-form h3,
+.password-box h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ================================================
+   TABLE (Students Management)
+================================================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 20px rgba(0,255,255,0.10);
+}
+
+th, td {
+    text-align: center;
+}
+
+th {
+    background: rgba(255, 255, 255, 0.10);
+    color: var(--primary);
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+td {
+    padding: 1rem 1.2rem;
+    font-size: 1rem;
+    color: var(--light);
+    background: rgba(255, 255, 255, 0.025);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: rgba(0, 255, 255, 0.10);
+}
+
+/* Center action buttons */
+td button {
+    width: auto;
+    padding: 0.6rem 1.2rem;
+    margin: 0.3rem auto;
+    display: block;
+    font-size: 0.95rem;
+}
+
+td button.danger {
+    background: linear-gradient(45deg, #ff0044, #ff00aa) !important;
+    color: var(--light) !important;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(255, 0, 120, 0.45);
+}
+
+/* ================================================
+   EDIT FORM
+================================================= */
+
+#editForm {
+    display: none;
+}
+
+/* ================================================
+   RESPONSIVE
+================================================= */
+
+@media (max-width: 600px) {
+    .header {
+        margin-left: 1rem;
+        padding: 1.5rem;
+    }
+    .nav {
+        margin: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .welcome-box {
+        margin: 1rem;
+    }
+    .dashboard-grid {
+        padding: 1rem;
+    }
+}

@@ -1,0 +1,122 @@
+<!--
+  Requirement: Create a Responsive Admin Portal
+
+  Instructions:
+  Fill in the HTML elements as described in the comments.
+  Use the provided IDs for the elements that require them.
+  Focus on creating a clear and semantic HTML structure.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+
+    <!-- CSS FRAMEWORKS -->
+
+    <!-- CUSTOM CSS FILES -->
+
+    <!-- FONTS -->
+
+</head>
+
+<body>
+    <header>
+        <h1>Admin Portal</h1>
+    </header>
+
+    <main>
+        <!-- Section 1: Password Management -->
+        <section>
+            <h2>Change Your Password</h2>
+
+            <form action="#" method="post">
+                <fieldset>
+                    <legend>Password Update</legend>
+
+                    <label for="current-password">Current Password</label>
+                    <input type="password" id="current-password" name="current_password" required>
+
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" name="new_password" minlength="8" required>
+
+                    <label for="confirm-password">Confirm New Password</label>
+                    <input type="password" id="confirm-password" name="confirm_password" required>
+
+                    <button type="submit" id="change">Update Password</button>
+                </fieldset>
+            </form>
+        </section>
+
+
+        <!-- Section 2: Student Management -->
+        <section>
+            <h2>Manage Students</h2>
+
+            <!-- Subsection 2.1: Add New Student Form -->
+            <details>
+                <summary>Add New Student</summary>
+                <form action="#" method="post">
+                    <fieldset>
+                        <legend>New Student Information</legend>
+                        <label for="student-name">Full Name</label>
+                        <input type="text" id="student-name" name="student_name" required>
+
+                        <label for="student-id">Student ID</label>
+                        <input type="text" id="student-id" name="student_id" required>
+
+                        <label for="student-email">Email</label>
+                        <input type="email" id="student-email" name="student_email" required>
+
+                        <label for="default-password">Default Password</label>
+                        <input type="text" id="default-password" name="default_password" value="password123">
+
+                        <button type="submit" id="add">Add Student</button>
+                    </fieldset>
+                </form>
+            </details>
+
+
+            <!-- Subsection 2.2: Student List -->
+            <h3>Registered Students</h3>
+            <table id="student-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Student ID</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!-- Dummy data for table structure demonstration -->
+                    <!-- First dummy student row -->
+                    <tr>
+                        <td>John Doe</td>
+                        <td>12345</td>
+                        <td>john.doe@example.com</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <!-- Second dummy student row -->
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>67890</td>
+                        <td>jane.smith@example.com</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+
+</html>

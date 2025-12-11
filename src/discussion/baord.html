@@ -1,0 +1,89 @@
+<!--
+  Requirement: Create the General Discussion Board
+
+  Instructions:
+  This page will list all discussion topics and include a form to create a new one.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discussion Board</title>
+
+    <!-- CSS FRAMEWORKS -->
+
+    <!-- CUSTOM CSS FILES -->
+
+    <!-- FONTS -->
+
+</head>
+
+<body>
+
+    <header>
+        <h1>General Discussion Board</h1>
+    </header>
+
+    <main>
+        <!-- Section 1: Create a New Topic -->
+        <section>
+            <h2>Start a New Topic</h2>
+
+            <form id="new-topic-form" action="#">
+                <fieldset>
+                    <legend>New Topic Details</legend>
+                    <label for="topic-subject">Topic Subject</label>
+                    <input id="topic-subject" type="text" required>
+
+                    <label for="topic-message">Main Message</label>
+                    <textarea id="topic-message" rows="6" required></textarea>
+
+                    <button id="create-topic" type="submit">Create Topic</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <!-- Section 2: Existing Topics -->
+        <section>
+            <h2>All Topics</h2>
+            <div>
+                <!-- Dummy data for topic structure demonstration -->
+                <!-- The links 'href' can be "topic-detail.html" for now. -->
+                <!-- First dummy Topic -->
+                <article>
+                    <h3><a href="topic-detail.html">Question about CSS Flexbox</a></h3>
+                    <footer>Posted by: Sarah Johnson on 2023-10-10</footer>
+                    <div>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </article>
+
+                <!-- Second dummy Topic -->
+                <article>
+                    <h3><a href="topic-detail.html">JavaScript project submission deadline</a></h3>
+                    <footer>Posted by: Mike Chen on 2023-10-08</footer>
+                    <div>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </article>
+
+                <!-- Third dummy Topic -->
+                <article>
+                    <h3><a href="topic-detail.html">Best practices for HTML semantic structure</a></h3>
+                    <footer>Posted by: Emma Davis on 2023-10-05</footer>
+                    <div>
+                        <!-- these buttons would only be visible to the topic's author or the admin. -->
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

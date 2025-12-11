@@ -1,0 +1,87 @@
+<!--
+  Requirement: Create the Page for a Single Discussion Topic
+
+  Instructions:
+  This page displays the original post of a topic, all its replies, and a form to add a new reply.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic Details</title>
+
+    <!-- CSS FRAMEWORKS -->
+
+    <!-- CUSTOM CSS FILES -->
+
+    <!-- FONTS -->
+
+</head>
+
+<body>
+    <header>
+        <h1>Question about CSS Flexbox</h1> <!-- Dummy title -->
+    </header>
+
+    <!-- TODO: Create the 'main' content area. -->
+    <main>
+        <!-- Section 1: Original Post -->
+        <article id="original-post">
+            <p>I'm having trouble aligning items properly in my flex container. The items keep stretching to fill the
+                entire width even though I set flex-basis. Can anyone help me understand what I'm doing wrong?</p>
+            <!-- Dummy original message -->
+            <footer>Posted by: Student Name on 2023-10-15</footer> <!-- Dummy metadata -->
+
+            <!-- these actions buttons are restricted to the owner or admin. -->
+            <div>
+                <button>Edit</button>
+                <button>Delete</button>
+            </div>
+        </article>
+
+        <!-- Section 2: Replies -->
+        <section id="replies-section">
+            <h2>Replies</h2>
+            <div>
+                <article>
+                    <p>Have you tried using 'justify-content: space-between'? This might help distribute your items
+                        evenly across the main axis.</p> <!-- Dummy reply text -->
+                    <footer>Posted by: Helper Student on 2023-10-16</footer> <!-- Dummy reply metadata -->
+                    <!-- these actions buttons are restricted to the owner or admin. -->
+                    <div>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </article>
+
+                <article>
+                    <p>Make sure you're not setting flex-grow to 1 on your flex items, as this will make them expand to
+                        fill available space.</p> <!-- Dummy reply text -->
+                    <footer>Posted by: CSS Expert on 2023-10-17</footer> <!-- Dummy reply metadata -->
+                    <!-- these actions buttons are restricted to the owner or admin. -->
+                    <div>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Section 3: Add a Reply Form -->
+        <section>
+            <h2>Post a Reply</h2>
+            <form action="#">
+                <fieldset>
+                    <legend>Your Reply</legend>
+                    <label for="new-reply">Message:</label>
+                    <textarea id="new-reply" required></textarea>
+                    <button type="submit">Post Reply</button>
+                </fieldset>
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>

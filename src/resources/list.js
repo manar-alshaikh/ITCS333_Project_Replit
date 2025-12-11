@@ -1,0 +1,34 @@
+/* list.js */
+
+const listSection = document.querySelector("#resource-list-section");
+
+const API_URL = "../resources/api/index.php";
+
+async function loadResources() {
+    try {
+        const res = await fetch(API_URL);
+
+        const data = await res.json();
+
+        listSection.innerHTML = "";
+
+        data.data.forEach(resource => {
+            const article = document.createElement("article");
+
+            article.innerHTML = `
+                <h2>${resource.title}</h2>
+                <p>${resource.description}</p>
+                <a href="details.html?id=${resource.id}">
+                    View Resource & Discussion
+                </a>
+            `;
+
+            listSection.appendChild(article);
+        });
+    } catch (err) {
+        console.error(err);
+        listSection.innerHTML = "<p>Error loading resources</p>";
+    }
+}
+
+loadResources();

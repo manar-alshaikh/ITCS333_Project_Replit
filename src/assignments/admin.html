@@ -1,0 +1,85 @@
+<!--
+  Requirement: Create the Admin View for Assignments
+
+  Instructions:
+  Fill in the HTML elements as described in the comments.
+  This page allows the teacher (admin) to perform full CRUD operations on course assignments.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="admin.js" defer></script>
+    <title>Manage Assignments</title>
+    <!-- CSS FRAMEWORKS -->
+
+    <!-- CUSTOM CSS FILES -->
+
+    <!-- FONTS -->
+</head>
+<body>
+    <header>
+        <h1>Manage Assignments</h1>
+    </header>
+    <main>
+        <!-- Section 1: Add/Edit Assignment Form -->
+        <section>
+            <h2>Add a New Assignment</h2>
+            <form id="assignment-form" action="#">
+                <fieldset>
+                    <legend>Assignment Details</legend>
+
+                    <label for="assignment-title">Assignment Title</label>
+                    <input id="assignment-title" type="text" required>
+
+                    <label for="assignment-description">Description</label>
+                    <textarea id="assignment-description" rows="5" required></textarea>
+
+                    <label for="assignment-due-date">Due Date</label>
+                    <input id="assignment-due-date" type="date" required>
+
+                    <label for="assignment-files">Attached Files or Links (one per line)</label>
+                    <textarea id="assignment-files" rows="3"></textarea>
+
+                    <button id="add-assignment" type="submit">Add Assignment</button>
+                </fieldset>
+            </form>
+        </section>
+        <!-- Section 2: Existing Assignments List -->
+        <section>
+            <h2>Current Assignments</h2>
+            <table id="assignments-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Due Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="assignments-tbody">
+                    <!-- Dummy data for table structure demonstration -->
+                    <!-- First dummy Assignment row -->
+                    <tr>
+                        <td>HTML Basics</td>
+                        <td>2023-10-15</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <!-- Second dummy Assignment row -->
+                    <tr>
+                        <td>CSS Layout Project</td>
+                        <td>2023-10-25</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

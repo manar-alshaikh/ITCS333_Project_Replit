@@ -1,0 +1,118 @@
+/* CSS Styles */
+body { 
+    font-family: Arial; 
+    max-width: 1200px; 
+    margin: auto; 
+    padding: 20px; 
+}
+
+.header { 
+    background: #2c3e50; 
+    color: white; 
+    padding: 15px; 
+}
+
+.nav { 
+    background: #34495e; 
+    padding: 10px; 
+    margin: 10px 0; 
+}
+
+.nav a { 
+    color: white; 
+    text-decoration: none; 
+    margin: 0 10px; 
+}
+
+.message { 
+    padding: 10px; 
+    margin: 10px 0; 
+}
+
+.success { 
+    background: #dff0d8; 
+    color: green; 
+}
+
+.error { 
+    background: #f2dede; 
+    color: red; 
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 10px 0; 
+}
+
+th, td { 
+    border: 1px solid #ddd; 
+    padding: 8px; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+
+button { 
+    background: #3498db; 
+    color: white; 
+    padding: 8px 15px; 
+    border: none; 
+    margin: 5px; 
+    cursor: pointer;
+}
+
+.danger { 
+    background: #e74c3c; 
+}
+
+.edit-form { 
+    background: #f8f9fa; 
+    padding: 15px; 
+    margin: 10px 0; 
+}
+
+.form-group { 
+    margin: 10px 0; 
+}
+
+.form-group label { 
+    display: block; 
+    margin-bottom: 5px; 
+    font-weight: bold; 
+}
+
+.form-group input { 
+    width: 100%; 
+    padding: 8px; 
+    border: 1px solid #ddd; 
+}
+
+.student-id { 
+    background: #e8f4fd; 
+    padding: 5px; 
+    border-radius: 3px; 
+    font-weight: bold; 
+}
+
+.sidebar { 
+    width: 200px; 
+    background: #ecf0f1; 
+    padding: 15px; 
+    margin-right: 20px; 
+}
+
+
+
+.form-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+}
+
+input { 
+    padding: 8px; 
+    margin: 5px 0; 
+}
