@@ -622,13 +622,12 @@ function createComment($db, $data)
         }
 
     // TODO: Prepare INSERT query for comment
-      $sql = "INSERT INTO assignment_comments (assignment_id, author, text) VALUES (:assignment_id, :author, :text)";
+      $sql = "INSERT INTO assignment_comments (assignment_id, comment_text) VALUES (:assignment_id, :comment_text)";
       $stmt = $db->prepare($sql);
 
     // TODO: Bind all parameters
       $stmt->bindValue(':assignment_id', $assignmentId, PDO::PARAM_INT);
-      $stmt->bindValue(':author', $author, PDO::PARAM_STR);
-      $stmt->bindValue(':text', $text, PDO::PARAM_STR);
+      $stmt->bindValue(':comment_text', $author . ': ' . $text, PDO::PARAM_STR);
 
     // TODO: Execute the statement
      $stmt->execute();

@@ -46,7 +46,6 @@ function getAssignmentIdFromURL()
   // Get the query string:
   const params = new URLSearchParams(window.location.search);
   //Get value of the 'id' parameter:
-  $assignmentId = $_GET['id'] ?? null;
   const id = params.get('id');
   //return id and make sure it is number not string:
   return parseInt(id);
