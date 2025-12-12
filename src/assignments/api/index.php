@@ -480,7 +480,7 @@ function deleteAssignment($db, $assignmentId)
     try{
     $db->beginTransaction();
     // TODO: Delete associated comments first (due to foreign key constraint)
-    $sqlDeleteComments = "DELETE FROM comments_assignment WHERE assignment_id = :id";
+    $sqlDeleteComments = "DELETE FROM assignment_comments WHERE assignment_id = :id";
     $stmtDeleteComments = $db->prepare($sqlDeleteComments);
     $stmtDeleteComments->bindValue(':id', $assignmentId, PDO::PARAM_INT);
     $stmtDeleteComments->execute();
@@ -552,7 +552,7 @@ function getCommentsByAssignment($db, $assignmentId)
         };
 
     // TODO: Prepare SQL query to select all comments for the assignment
-      $sql = "SELECT * FROM comments_assignment WHERE assignment_id = :id";
+      $sql = "SELECT * FROM assignment_comments WHERE assignment_id = :id";
       $stmt = $db->prepare($sql);
 
     // TODO: Bind the :assignment_id parameter
@@ -622,7 +622,7 @@ function createComment($db, $data)
         }
 
     // TODO: Prepare INSERT query for comment
-      $sql = "INSERT INTO comments_assignment (assignment_id, author, text) VALUES (:assignment_id, :author, :text)";
+      $sql = "INSERT INTO assignment_comments (assignment_id, author, text) VALUES (:assignment_id, :author, :text)";
       $stmt = $db->prepare($sql);
 
     // TODO: Bind all parameters
@@ -680,7 +680,7 @@ function deleteComment($db, $commentId)
         };
 
     // TODO: Check if comment exists
-      $checkStmt = $db->prepare("SELECT COUNT(*) FROM comments_assignment WHERE id = :id");
+      $checkStmt = $db->prepare("SELECT COUNT(*) FROM assignment_comments WHERE id = :id");
       $checkStmt->execute([':id' => $commentId]);
      if ($checkStmt->fetchColumn() == 0) 
         {
@@ -690,7 +690,7 @@ function deleteComment($db, $commentId)
     try 
     {
     // TODO: Prepare DELETE query
-    $sql = "DELETE FROM comments_assignment WHERE id = :id";
+    $sql = "DELETE FROM assignment_comments WHERE id = :id";
     $stmt = $db->prepare($sql);
 
     // TODO: Bind the :id parameter
