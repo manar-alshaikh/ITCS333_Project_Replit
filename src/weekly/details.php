@@ -31,15 +31,16 @@ $isAdmin          = function_exists('isAdmin') ? isAdmin() : false;
 
     <!-- JS GLOBALS FROM PHP -->
     <script>
-        window.IS_ADMIN = <?= $isAdmin ? 'true' : 'false'; ?>;
-        window.LOGGED_IN_USER_ID = <?= $loggedInUserId !== null ? $loggedInUserId : 'null' ?>;
-        window.LOGGED_IN_USER_NAME = <?= json_encode($loggedInUsername) ?>;
+    window.IS_ADMIN = <?= $isAdmin ? 'true' : 'false'; ?>;
+    window.LOGGED_IN_USER_ID = <?= $loggedInUserId !== null ? $loggedInUserId : 'null' ?>;
+    window.LOGGED_IN_USER_NAME = <?= json_encode($loggedInUsername) ?>;
+
+    window.BACK_URL = <?= $isAdmin ? '"../weekly/admin.php"' : '"../weekly/list.php"' ?>;
     </script>
 
     <!-- JS FILES -->
     <script src="../common/js/background.js"></script>
     <script src="../weekly/details.js" defer></script>
-    <script src="../common/js/goBackButton.js" defer></script>
 </head>
 
 <body>

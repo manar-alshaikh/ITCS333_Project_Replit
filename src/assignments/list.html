@@ -5,61 +5,48 @@
   This page is a read-only view for students to see all course assignments.
   Each assignment should link to its dedicated detail page.
 -->
+<!--
+<?php
+require_once __DIR__ . "/../../config/Config.php";
+// Allow any logged-in user (Teacher OR Student) to view the assignmets list:
+if (!isLoggedIn())
+{
+    header("Location: ../auth/login.php");
+    exit();
+}?>
+-->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Assignments</title>
     <script src="list.js" defer></script>
-
     <!-- CSS FRAMEWORKS -->
-
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
     <!-- CUSTOM CSS FILES -->
-
+       <style>
+           h1{text-align: center;}
+           a{margin:2rem; display:flex;}
+         </style>
     <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
 
 </head>
-
 <body>
-
     <header>
         <h1>Course Assignments</h1>
     </header>
-
     <main>
-        <section>
+        <section id="assignment-list-section">
             <!-- Dummy data for assignment structure demonstration -->
             <!-- For now, the 'href' can be "assignment-detail.html -->
             <!-- First dummy Assignment -->
-            <article>
-                <h2>Assignment 1: HTML Basics</h2>
-                <!-- dummy date in YYYY-MM-DD format -->
-                <p>Due: 2023-10-15</p>
-                <p>Create a basic HTML page with proper semantic structure and elements.</p>
-                <a href="assignment-detail.html">View Details & Discussion</a>
-            </article>
-
-            <!-- Second dummy Assignment -->
-            <article>
-                <h2>Assignment 2: CSS Layout Project</h2>
-                <!-- dummy date in YYYY-MM-DD format -->
-                <p>Due: 2023-10-25</p>
-                <p>Design and implement responsive layouts using CSS Grid and Flexbox.</p>
-                <a href="assignment-detail.html">View Details & Discussion</a>
-            </article>
-
-            <!-- Third dummy Assignment -->
-            <article>
-                <h2>Assignment 3: JavaScript Fundamentals</h2>
-                <!-- dummy date in YYYY-MM-DD format -->
-                <p>Due: 2023-11-05</p>
-                <p>Practice JavaScript basics including functions, arrays, and DOM manipulation.</p>
-                <a href="assignment-detail.html">View Details & Discussion</a>
-            </article>
         </section>
     </main>
+    <a href="../../../index.html"><button type="button">Back</button></a>
 </body>
-
 </html>

@@ -47,7 +47,7 @@ function getWeekIdFromURL() {
 
 function formatDateTime(date) {
     const d = new Date(date);
-    return `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${d.getMinutes().toString().padStart(2, '0')}`;
+    return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${d.getMinutes().toString().padStart(2, '0')}`;
 }
 
 function getInitials(name = "") {
@@ -306,5 +306,16 @@ async function initializePage() {
         commentForm._attached = true;
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("go-back-btn");
+    if (!btn) return;
+
+    btn.addEventListener("click", () => {
+        window.location.href = window.BACK_URL;
+    });
+});
+
+
 
 document.addEventListener("DOMContentLoaded", initializePage);

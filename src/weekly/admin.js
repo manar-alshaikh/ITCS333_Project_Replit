@@ -288,12 +288,12 @@ async function handleEditSubmit(event) {
 
   if (!validateForm(fields)) return;
 
-  
+
   const oldWeek = weeks.find(w => w.id === currentEditId);
 
   const payload = {
     id: Number(currentEditId),
-    week_id: oldWeek.week_id,     
+    week_id: oldWeek.week_id,
     title: editTitleInput.value.trim(),
     start_date: editStartDateInput.value.trim(),
     description: editDescriptionInput.value.trim(),
@@ -416,11 +416,11 @@ async function importJsonCommentsOnce() {
   }
 
   try {
-    
+
     const res = await fetch("./api/comments.json");
     const allComments = await res.json();
 
-    
+
     const usersRes = await fetch("./api/index.php?resource=users");
     const usersData = await usersRes.json();
 
@@ -428,11 +428,11 @@ async function importJsonCommentsOnce() {
 
     const userMap = {};
     users.forEach(u => {
-      if (!u || !u.username) return; 
+      if (!u || !u.username) return;
       userMap[u.username.trim().toLowerCase()] = u.id;
     });
 
-    
+
     for (const weekKey in allComments) {
       const weekId = Number(weekKey.replace("week_", ""));
       const comments = allComments[weekKey];
@@ -440,7 +440,7 @@ async function importJsonCommentsOnce() {
       if (!Array.isArray(comments)) continue;
 
       for (const c of comments) {
-        
+
         if (!c || !c.author || !c.text) continue;
 
         const author = c.author.trim().toLowerCase();
@@ -452,7 +452,7 @@ async function importJsonCommentsOnce() {
           continue;
         }
 
-        
+
         await fetch("./api/index.php?action=weekly_comments", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -511,3 +511,12 @@ async function loadAndInitialize() {
 }
 
 loadAndInitialize();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("go-back-btn");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    window.location.href = "../auth/AdminPortal.php";
+  });
+});

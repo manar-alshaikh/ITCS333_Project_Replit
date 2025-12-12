@@ -1,4 +1,14 @@
 <!--
+<?php
+require_once __DIR__ . "/../../config/Config.php";
+//Allow logged-in user (Teacher/Admin) to full CRUD of assignments:
+if (!isLoggedIn() || !isAdmin()) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+?>
+-->
+<!--
   Requirement: Create the Admin View for Assignments
 
   Instructions:
@@ -13,10 +23,33 @@
      <script src="admin.js" defer></script>
     <title>Manage Assignments</title>
     <!-- CSS FRAMEWORKS -->
-
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
     <!-- CUSTOM CSS FILES -->
+    <style>
+        h1,h2{text-align: center;}
+        legend{text-align: center; font-weight:bold;}
+        label{font-weight:bold;}
+        table th:nth-child(3) {text-align: center;}
+        #assignment-form
+        {
+            padding-left: 3rem; 
+            padding-right: 3rem;
+            padding-top: 2rem; 
+            padding-bottom: 2rem;
+        }
+        .delete-btn{background-color:#c72727; border-color:#c72727;}
+        .delete-btn:hover{background-color:#961b1b; border-color:#961b1b;}
+        .edit-btn{background-color:#FFC107; border-color:#FFC107;}
+        .edit-btn:hover{background-color:#E0A800; border-color:#E0A800;}
+        #add-assignment{background-color:#4CAF50; border-color:#4CAF50;}
+        #add-assignment:hover{background-color:#45a049; border-color:#45a049;}
+    </style>
+    <!-- FONTS --> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
-    <!-- FONTS -->
+
 </head>
 <body>
     <header>
@@ -25,7 +58,7 @@
     <main>
         <!-- Section 1: Add/Edit Assignment Form -->
         <section>
-            <h2>Add a New Assignment</h2>
+            <h2 style="color:green;">Add a New Assignment</h2>
             <form id="assignment-form" action="#">
                 <fieldset>
                     <legend>Assignment Details</legend>
@@ -48,7 +81,7 @@
         </section>
         <!-- Section 2: Existing Assignments List -->
         <section>
-            <h2>Current Assignments</h2>
+            <h2 style="text-align: center">Current Assignments</h2>
             <table id="assignments-table">
                 <thead>
                     <tr>
@@ -60,25 +93,26 @@
                 <tbody id="assignments-tbody">
                     <!-- Dummy data for table structure demonstration -->
                     <!-- First dummy Assignment row -->
-                    <tr>
-                        <td>HTML Basics</td>
-                        <td>2023-10-15</td>
+                    <!--<tr>
+                        <td></td>
+                        <td></td>
                         <td>
                             <button>Edit</button>
                             <button>Delete</button>
                         </td>
-                    </tr>
-                    <!-- Second dummy Assignment row -->
+                    </tr>-->
+                    <!-- Second dummy Assignment row 
                     <tr>
-                        <td>CSS Layout Project</td>
-                        <td>2023-10-25</td>
+                        <td></td>
+                        <td></td>
                         <td>
                             <button>Edit</button>
                             <button>Delete</button>
                         </td>
-                    </tr>
+                    </tr>-->
                 </tbody>
             </table>
+             <a href="list.html"><button type="button">Back</button></a>
         </section>
     </main>
 </body>

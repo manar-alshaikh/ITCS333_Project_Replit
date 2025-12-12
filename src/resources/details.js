@@ -13,7 +13,7 @@ const resourceLink = document.querySelector("#resource-link");
 
 const commentList = document.querySelector("#comment-list");
 const commentForm = document.querySelector("#comment-form");
-const newComment = document.querySelector("#new-comment");
+const newComment = document.querySelector("#new-comment-text");
 
 // API URL
 const API_URL = "./api/index.php";

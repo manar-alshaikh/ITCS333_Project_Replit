@@ -6,7 +6,7 @@ const titleInput = document.querySelector("#resource-title");
 const descriptionInput = document.querySelector("#resource-description");
 const linkInput = document.querySelector("#resource-link");
 
-// API BASE URL (صح)
+// API BASE URL
 const API_URL = "./api/index.php";
 
 // Load all resources from the API

@@ -4,10 +4,10 @@
   Instructions:
   1. Link this file to `admin.html` using:
      <script src="admin.js" defer></script>
-  
+
   2. In `admin.html`, add an `id="assignments-tbody"` to the <tbody> element
      so you can select it.
-  
+
   3. Implement the TODOs below.
 */
 
@@ -20,7 +20,7 @@ let assignments = [];
 const assignmentForm = document.getElementById("assignment-form");
 
 // TODO: Select the assignments table body ('#assignments-tbody').
-const  assignmentsTableBody = document.getElementById("assignments-tbody");
+const assignmentTableBody = document.getElementById("assignments-tbody");
 
 // --- Functions ---
 
@@ -36,36 +36,32 @@ const  assignmentsTableBody = document.getElementById("assignments-tbody");
  */
 function createAssignmentRow(assignment)
 {
-  //create table row:
+  // Destructure assignment object for easier access:
+  const { id, title, due_date} = assignment;
+  //create tr and tds:
   const tr = document.createElement("tr");
-  //create td for title and add it to tr:
-  const titleTd = document.createElement("td");
-  titleTd.textContent = assignment.title;
-  tr.appendChild(titleTd);
-  //create td for due date and add it to tr:
-  const dueDateTd = document.createElement("td");
-  dueDateTd.textContent = assignment.dueDate;
-  tr.appendChild(dueDateTd);
-  //create td for buttons:
-  const twoButtons = document.createElement("td");
-  //Edit button:
+  const tdtitle = document.createElement("td");
+  const tdDueDate = document.createElement("td");
+  const tdButtons = document.createElement("td");
   const editButton = document.createElement("button");
+  const deleteButton = document.createElement("button");
+  //assigning data to each new element:
+  tdtitle.textContent = `${title}`
+  tdDueDate.textContent= `${due_date}`;
   editButton.textContent = "Edit";
   editButton.className = "edit-btn";
-  editButton.setAttribute("data-id", assignment.id);
-  //Delete button:
-  const deleteButton = document.createElement("button");
+  editButton.dataset.id=`${id}`;
   deleteButton.textContent = "Delete";
   deleteButton.className = "delete-btn";
-  deleteButton.setAttribute("data-id", assignment.id);
-  // add edit and delete buttons to table data:
-  twoButtons.appendChild(editButton);
-  twoButtons.appendChild(deleteButton);
-  //add edit and delete buttons to table row:
-  tr.appendChild(twoButtons);
-  //return table row:
+  deleteButton.dataset.id=`${id}`;
+  //append buttons in their td:
+  tdButtons.append(editButton, deleteButton);
+  //append elements to tr:
+  tr.append(tdtitle, tdDueDate, tdButtons);
+  //return
   return tr;
 }
+
 /**
  * TODO: Implement the renderTable function.
  * It should:
@@ -77,15 +73,17 @@ function createAssignmentRow(assignment)
 function renderTable()
 {
   //clear assignmentsTableBody:
-  assignmentsTableBody.innerHTML = "";
-  //loop through assignments:
+  assignmentTableBody.innerHTML = "";
+  //loop through assignments array:
   assignments.forEach(assignment =>
     {
-     //create and append row for each assignment:
-     const row = createAssignmentRow(assignment);
-     assignmentsTableBody.appendChild(row);
-    });
+       //calling createAssignmentRow()
+       const tableRow = createAssignmentRow(assignment);
+       //append tr:
+       assignmentTableBody.appendChild(tableRow);
+    })
 }
+
 /**
  * TODO: Implement the handleAddAssignment function.
  * This is the event handler for the form's 'submit' event.
@@ -97,34 +95,36 @@ function renderTable()
  * 5. Call `renderTable()` to refresh the list.
  * 6. Reset the form.
  */
-function handleAddAssignment(event)
+async function handleAddAssignment(event)
 {
-  //prevent default submit:
+  //prevent default submission:
   event.preventDefault();
-  //Get values from title, description, due date, and files inputs:
-  const titleInput = document.getElementById("assignment-title");
-  const descriptionInput = document.getElementById("assignment-description");
-  const dueDateInput = document.getElementById("assignment-due-date");
-  const filesInput = document.getElementById("assignment-files");
-  const title = titleInput.value;
-  const description = descriptionInput.value;
-  const dueDate = dueDateInput.value;
-  const files = filesInput.files;
-  //create new assignment object with unique ID:
-   const newAssignment ={
-    id: `asg_${Date.now()}`,
-    title: title,
-    description: description,
-    dueDate: dueDate,
-    files: files
-  };
-  //add new assignment (push):
-  assignments.push(newAssignment);
-  //refresh the list:
-   renderTable();
-  //Reset form:
-  event.target.reset();
+  //Get the values from the title, description, due date, and files inputs:
+  const title = document.getElementById("assignment-title").value;
+  const description = document.getElementById("assignment-description").value;
+  const due_date = document.getElementById("assignment-due-date").value;
+  const files = document.getElementById("assignment-files").value;
+  /*//create new assignmet object:
+  const assignment = {id: Date.now(), title: title, description: description, dueDate: dueDate, files: [file] }
+  //add new assignment to assignmets array:
+  assignments.push(assignment);*/
+  const newAssignmentData = {title: title,description: description, due_date: due_date, files: files};
+  const response = await fetch("api/index.php?resource=assignments", {method: 'POST',headers: {'Content-Type': 'application/json'},body: JSON.stringify(newAssignmentData)});
+  const result = await response.json();
+  if (result.success && result.assignment)
+    {
+      assignments.push(result.assignment);
+      //Refresh list:
+        renderTable();
+      //Reset the form:
+        event.target.reset();
+    }
+  else 
+    {
+        console.error("Failed to create assignment:", result.error || result.message);
+    }
 }
+
 /**
  * TODO: Implement the handleTableClick function.
  * This is an event listener on the `assignmentsTableBody` (for delegation).
@@ -135,18 +135,49 @@ function handleAddAssignment(event)
  * with the matching ID (in-memory only).
  * 4. Call `renderTable()` to refresh the list.
  */
-function handleTableClick(event)
+async function handleTableClick(event)
 {
-  //Check if target is clicked and  get data-id if so:
-  if (event.target.classList.contains("delete-btn"))
+  //Check if the clicked element (`event.target`) has the class "delete-btn":
+  if(event.target.className==="delete-btn")
     {
-     const id = event.target.getAttribute("data-id");
-     //filtering out assignment to update:
-     assignments = assignments.filter(assignment => assignment.id !== id);
-     //refresh list:
-     renderTable();
+      //get `data-id`
+      const assignmentId = event.target.dataset.id;
+      //filtering out the assignment with the matching ID:assignments = assignments.filter(a => a.id !==id);
+      const response = await fetch(`api/index.php?resource=assignments&id=${assignmentId}`, { method: 'DELETE'});
+      const result = await response.json();
+      if (result.success)
+        {
+          assignments = assignments.filter(a => String(a.id) !== assignmentId);
+          //refresh list:
+           renderTable();
+           //alert(result.message);
+        }
+        else
+        {
+           console.error("Failed to delete assignment:", result.error || result.message);
+           alert("Error deleting assignment: " + (result.error || result.message));
+        }
     }
+    else if (event.target.classList.contains("edit-btn"))
+    {
+    const assignmentId = event.target.dataset.id;
+
+    if (assignmentId) {
+    // Construct the URL to redirect to update.html, passing the ID as a query parameter
+    const redirectUrl = `update.html?id=${assignmentId}`;
+
+    // Perform the redirection
+    window.location.href = redirectUrl;
+    } else {
+    console.error("Edit button clicked but no assignment ID found.");
+    }
+    }
+  else
+  {
+      console.log(`Assignment not found.`);
+  }
 }
+
 /**
  * TODO: Implement the loadAndInitialize function.
  * This function needs to be 'async'.
@@ -159,17 +190,31 @@ function handleTableClick(event)
  */
 async function loadAndInitialize()
 {
-  //Get data using fetch():
-   const response = await fetch("assignments.json");
-  //parse response and store it in assignments array:
-   assignments = await response.json();
-  //call renderTable:
-   renderTable();
-  //submit event listener:
+  //get data from assignments.json using fetch:const data = await fetch("assignments.json");
+  const response = await fetch("api/index.php?resource=assignments");
+  //parse:data = await data.json();
+  try
+  {
+   const result = await response.json();
+   if (response.ok)
+    {
+         //store:assignments = result; 
+         assignments = Array.isArray(result) ? result : [];
+         //populate:
+          renderTable();
+    }
+   else
+   {
+     console.error("Failed to load assignments:", result.error || response.statusText);
+   }
+  } 
+  catch (e) {console.error("Error:", e);}
+  //submit eventListener:
   assignmentForm.addEventListener("submit", handleAddAssignment);
-  //clik event listener:
-  assignmentsTableBody.addEventListener("click", handleTableClick);
+  //click eventListener:
+  assignmentTableBody.addEventListener("click", handleTableClick);
 }
+
 // --- Initial Page Load ---
 // Call the main async function to start the application.
 loadAndInitialize();

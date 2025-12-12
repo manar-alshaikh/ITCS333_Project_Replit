@@ -22,26 +22,28 @@ if (!isLoggedIn() || !isAdmin()) {
     <!-- CSS FRAMEWORKS -->
 
     <!-- CUSTOM CSS FILES -->
-<link rel="stylesheet" href="../common/css/background.css">
-<link rel="stylesheet" href="../common/css/weekly-admin.css">
+    <link rel="stylesheet" href="../common/css/background.css">
+    <link rel="stylesheet" href="../common/css/weekly-admin.css">
 
     <!-- JS FILES -->
-     <script src="../common/js/background.js"></script>
+    <script src="../common/js/background.js"></script>
     <script src="../weekly/admin.js" defer></script>
-    <script src="../common/js/goBackButton.js"></script>
+    <script>
+    window.BACK_URL = <?= isAdmin() ? '"../weekly/admin.php"' : '"../weekly/list.php"' ?>;
+    </script>
 
 </head>
 
 <body id="main-content">
 
-<div class="bg-animation">
-    <div class="neural-network" id="neuralNetwork"></div>
-    <div class="particles" id="particles"></div>
-</div>
+    <div class="bg-animation">
+        <div class="neural-network" id="neuralNetwork"></div>
+        <div class="particles" id="particles"></div>
+    </div>
 
     <header>
         <button id="go-back-btn">⮜</button>
-            <h1>Manage Weekly Breakdown</h1>
+        <h1>Manage Weekly Breakdown</h1>
     </header>
 
     <main>

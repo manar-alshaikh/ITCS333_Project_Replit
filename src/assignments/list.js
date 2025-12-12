@@ -10,10 +10,14 @@
 
   3. Implement the TODOs below.
 */
+
 // --- Element Selections ---
 // TODO: Select the section for the assignment list ('#assignment-list-section').
-const assignmentListSection = document.getElementById("assignment-list-section");
+const assignmentList = document.getElementById("assignment-list-section");
+
 // --- Functions ---
+//API:
+ const API = "api/index.php?resource=assignments";
 /**
  * TODO: Implement the createAssignmentArticle function.
  * It takes one assignment object {id, title, dueDate, description}.
@@ -21,30 +25,29 @@ const assignmentListSection = document.getElementById("assignment-list-section")
  * The "View Details" link's `href` MUST be set to `details.html?id=${id}`.
  * This is how the detail page will know which assignment to load.
  */
-function createAssignmentArticle({ id, title, dueDate, description })
+function createAssignmentArticle(assignment)
 {
-  //creating article:
+  // Destructure assignment object for easier access:
+  const { id, title, due_date, description } = assignment;
+  //creating article element:
   const article = document.createElement("article");
-  // creating title and add it to article:
-  const h2Title = document.createElement("h2");
-  h2Title.textContent = title;
-  article.appendChild(h2Title);
-  //creating due date and add it to article in a paragraph:
-  const duedate = document.createElement("p");
-  duedate.textContent = `Due: ${dueDate}`; 
-  article.appendChild(duedate);
-  //creating description and add it to article in a paragraph:
-  const desc = document.createElement("p");
-  desc.textContent = description;
-  article.appendChild(desc);
-  //creating link to view details by id:
-  const link = document.createElement("a");
-  link.href = `details.html?id=${id}`;
-  link.textContent = "View Detail";
-  article.appendChild(link);
-  //load:
+  //creating details:
+  const h2 = document.createElement("h2");
+  const p1 = document.createElement("p");
+  const p2 = document.createElement("p");
+  const a = document.createElement("a");
+  //assigning data to each new element:
+  a.textContent = "View Details";
+  a.href=`details.html?id=${id}`;
+  h2.textContent = `Assignment ${id}: ${title}`;
+  p1.textContent="Due:" + ` ${due_date}`;
+  p2.textContent= description;
+  //adding element to article:
+  article.append(h2, p1, p2, a);
+  //return
   return article;
 }
+
 /**
  * TODO: Implement the loadAssignments function.
  * This function needs to be 'async'.
@@ -56,26 +59,24 @@ function createAssignmentArticle({ id, title, dueDate, description })
  * - Call `createAssignmentArticle()`.
  * - Append the returned <article> element to `listSection`.
  */
-async function loadAssignments() 
+async function loadAssignments()
 {
-  try 
-  {
-    //request the JSON file:
-    const response = await fetch("assignments.json");
-    //converting it into a JavaScript array of objects:
-    const assignments = await response.json();
-    // Handelling duplicates by cleaning before adding fresh content:
-    assignmentListSection.innerHTML = "";
-    // 4. Loop through each assignment objects and show then in article:
-    assignments.forEach(assignment =>{
-        const article = createAssignmentArticle(assignment);
-        assignmentListSection.appendChild(article);
+  //fetch
+  const response = await fetch(API);
+  //parse(converting json to object)
+  const assignments = await response.json();
+  //clear content from assignment list:
+  assignmentList.textContent="";
+  //Loop for each assignment:
+  assignments.forEach(assignment =>
+    {
+      //call create article function:
+      const newArticle = createAssignmentArticle(assignment);
+      //Append article to section:
+      assignmentList.appendChild(newArticle);
     });
-    //Handelling error:
-  } catch (error) {
-    console.error("Error loading assignments:", error);
-  }
 }
+
 // --- Initial Page Load ---
 // Call the function to populate the page.
 loadAssignments();

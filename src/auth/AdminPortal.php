@@ -13,21 +13,27 @@ $action = $_GET['action'] ?? 'dashboard';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    /* Change Password */
+    /* ===============================
+       CHANGE PASSWORD
+    =============================== */
     if (isset($_POST['change_password'])) {
         $current_password = $_POST['current_password'];
         $new_password = $_POST['new_password'];
         $confirm_password = $_POST['confirm_password'];
 
-        $stmt = $conn->prepare("SELECT password FROM users WHERE id = ?");
+        // FIXED: use password_hash column
+        $stmt = $conn->prepare("SELECT password_hash FROM users WHERE id = ?");
         $stmt->execute([$_SESSION['user_id']]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (password_verify($current_password, $user['password'])) {
+        if ($user && password_verify($current_password, $user['password_hash'])) {
             if ($new_password === $confirm_password) {
-                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-                $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
-                $stmt->execute([$hashed_password, $_SESSION['user_id']]);
+
+                $hashed = password_hash($new_password, PASSWORD_DEFAULT);
+
+                // FIXED
+                $update = $conn->prepare("UPDATE users SET password_hash = ? WHERE id = ?");
+                $update->execute([$hashed, $_SESSION['user_id']]);
 
                 $message = "Password changed successfully!";
                 $message_type = "success";
@@ -41,21 +47,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    /* Add Student */
+    /* ===============================
+       ADD STUDENT
+    =============================== */
     elseif (isset($_POST['add_student'])) {
+
         $username = $_POST['username'];
         $email = $_POST['email'];
-        $password = password_hash('student123', PASSWORD_DEFAULT);
 
-        $stmt = $conn->prepare("INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, 'student')");
-        $stmt->execute([$username, $password, $email]);
+        // FIXED: use password_hash column
+        $password_hash = password_hash('student123', PASSWORD_DEFAULT);
+
+        $stmt = $conn->prepare("
+            INSERT INTO users (username, email, password_hash, role)
+            VALUES (?, ?, ?, 'student')
+        ");
+
+        $stmt->execute([$username, $email, $password_hash]);
 
         $message = "Student added successfully! Default password: student123";
         $message_type = "success";
     }
 
-    /* Update Student */
+    /* ===============================
+       UPDATE STUDENT
+    =============================== */
     elseif (isset($_POST['update_student'])) {
+
         $id = $_POST['id'];
         $username = $_POST['username'];
         $email = $_POST['email'];
@@ -67,8 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message_type = "success";
     }
 
-    /* Delete User */
+    /* ===============================
+       DELETE USER
+    =============================== */
     elseif (isset($_POST['delete_user'])) {
+
         $id = $_POST['id'];
 
         $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
@@ -79,13 +100,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-/* Fetch student list only for student view */
+/* ===============================
+   FETCH ALL STUDENTS
+=============================== */
 $students = [];
 if ($action === 'students') {
-    $stmt = $conn->query("SELECT * FROM users WHERE role = 'student'");
+    $stmt = $conn->query("SELECT id, username, email FROM users WHERE role = 'student'");
     $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -167,7 +191,7 @@ if ($action === 'students') {
     <div class="card">
         <h3>Assignments</h3>
         <p>Create and manage assignments and grading.</p>
-        <a href="../assignments/admin.php"><button>Manage Assignments</button></a>
+        <a href="../assignments/admin.html"><button>Manage Assignments</button></a>
     </div>
 
     <div class="card">

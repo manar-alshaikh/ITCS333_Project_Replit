@@ -35,6 +35,7 @@ if (!isLoggedIn() || !isStudent()) {
      </style>
 
      <!-- JS -->
+     <!-- <script src="../resources/list.js" defer></script> -->
      <link rel="stylesheet" href="../common/css/background.css">
 <link rel="stylesheet" href="../common/css/weekly-list.css">
 

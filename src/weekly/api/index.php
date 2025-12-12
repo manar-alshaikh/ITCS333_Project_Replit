@@ -1,7 +1,8 @@
 <?php
 /**
- * Weekly Course Breakdown API
- * Matches NEW schema exactly (no is_active, uses week_id + links JSON)
+ * Weekly Course Breakdown API (Corrected Version)
+ * Stores ALL user-typed text RAW (title, description, comments, replies)
+ * Escaping happens ONLY on the frontend (safe with JS .textContent)
  */
 
 header("Content-Type: application/json");
@@ -21,7 +22,7 @@ $query  = $_GET;
 $input  = json_decode(file_get_contents('php://input'), true);
 
 /* ===========================================================
-   HELPER FUNCTIONS
+   RESPONSE HELPERS
 =========================================================== */
 function sendResponse($data, $statusCode = 200) {
     http_response_code($statusCode);
@@ -33,21 +34,23 @@ function sendError($msg, $statusCode = 400) {
     sendResponse(["success" => false, "error" => $msg], $statusCode);
 }
 
-function sanitizeInput($d) {
-    return is_array($d)
-        ? array_map('sanitizeInput', $d)
-        : htmlspecialchars(strip_tags(trim((string)$d)), ENT_QUOTES, "UTF-8");
+/* ===========================================================
+   NOTE: WE NO LONGER ESCAPE TEXT HERE.
+   All text is stored RAW so <html> stays <html>.
+=========================================================== */
+
+function cleanInt($v) {
+    return intval($v);
 }
 
 /* ===========================================================
-   GET USERS (NEEDED FOR COMMENT IMPORT)
+   GET USERS (for comment importer)
 =========================================================== */
 if ($method === "GET" && ($query["resource"] ?? "") === "users") {
     try {
         $stmt = $conn->prepare("SELECT id, username FROM users");
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         sendResponse(["success" => true, "data" => $rows]);
     } catch (PDOException $e) {
         sendError("Database error: " . $e->getMessage(), 500);
@@ -83,7 +86,7 @@ function getAllWeeks($conn) {
 }
 
 /* ===========================================================
-   GET WEEK BY ID OR week_id
+   GET WEEK BY ID
 =========================================================== */
 function getWeekById($conn, $id) {
     if (!$id || !is_numeric($id)) sendError("Valid ID required");
@@ -98,6 +101,7 @@ function getWeekById($conn, $id) {
         if (!$row) sendError("Week not found", 404);
 
         $row["links"] = json_decode($row["links"], true) ?? [];
+
         sendResponse(["success" => true, "data" => $row]);
     } catch (PDOException $e) {
         sendError("Database error: " . $e->getMessage(), 500);
@@ -105,20 +109,19 @@ function getWeekById($conn, $id) {
 }
 
 /* ===========================================================
-   CREATE WEEK
+   CREATE WEEK (STORE TEXT RAW)
 =========================================================== */
 function createWeek($conn, $d) {
     foreach (["week_id","title","description","start_date"] as $f) {
         if (!isset($d[$f])) sendError("Missing field: $f");
     }
 
-    $week_id = sanitizeInput($d["week_id"]);
-    $title   = sanitizeInput($d["title"]);
-    $desc    = sanitizeInput($d["description"]);
-    $date    = sanitizeInput($d["start_date"]);
-    $created = 1; // static for now
+    $week_id = cleanInt($d["week_id"]);
+    $title   = trim($d["title"]);         // RAW text
+    $desc    = trim($d["description"]);   // RAW text
+    $date    = trim($d["start_date"]);    // RAW
+    $created = 1;
 
-    // Ensure week_id is unique
     $check = $conn->prepare("SELECT id FROM weekly_breakdown WHERE week_id = ?");
     $check->execute([$week_id]);
     if ($check->fetch()) sendError("Week ID already exists", 409);
@@ -135,7 +138,6 @@ function createWeek($conn, $d) {
     try {
         $stmt = $conn->prepare($sql);
         $stmt->execute([$week_id, $title, $desc, $links, $date, $created]);
-
         getWeekById($conn, $conn->lastInsertId());
     } catch (PDOException $e) {
         sendError("Database error: " . $e->getMessage(), 500);
@@ -143,12 +145,12 @@ function createWeek($conn, $d) {
 }
 
 /* ===========================================================
-   UPDATE WEEK
+   UPDATE WEEK (RAW TEXT)
 =========================================================== */
 function updateWeek($conn, $d) {
     if (!isset($d["id"])) sendError("Week ID required");
 
-    $id = $d["id"];
+    $id = cleanInt($d["id"]);
 
     $check = $conn->prepare("SELECT id FROM weekly_breakdown WHERE id = ?");
     $check->execute([$id]);
@@ -157,11 +159,24 @@ function updateWeek($conn, $d) {
     $set = [];
     $params = [];
 
-    foreach (["week_id","title","description","start_date"] as $f) {
-        if (isset($d[$f])) {
-            $set[] = "$f = ?";
-            $params[] = sanitizeInput($d[$f]);
-        }
+    if (isset($d["week_id"])) {
+        $set[] = "week_id = ?";
+        $params[] = cleanInt($d["week_id"]);
+    }
+
+    if (isset($d["title"])) {
+        $set[] = "title = ?";
+        $params[] = trim($d["title"]);  
+    }
+
+    if (isset($d["description"])) {
+        $set[] = "description = ?";
+        $params[] = trim($d["description"]);  
+    }
+
+    if (isset($d["start_date"])) {
+        $set[] = "start_date = ?";
+        $params[] = trim($d["start_date"]);  
     }
 
     if (isset($d["links"])) {
@@ -177,7 +192,6 @@ function updateWeek($conn, $d) {
     try {
         $stmt = $conn->prepare($sql);
         $stmt->execute($params);
-
         getWeekById($conn, $id);
     } catch (PDOException $e) {
         sendError("Database error: " . $e->getMessage(), 500);
@@ -214,7 +228,6 @@ function getCommentsForWeek($conn, $week_id) {
             WHERE wc.week_id = ?
             ORDER BY wc.created_at ASC
         ");
-
         $stmt->execute([$week_id]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -228,97 +241,83 @@ function getCommentsForWeek($conn, $week_id) {
    ROUTER
 =========================================================== */
 
-// ---------- GET ----------
+// GET
 if ($method === "GET") {
 
-    // Get comments for a week
     if (($query["resource"] ?? "") === "weekly_comments") {
         getCommentsForWeek($conn, $query["week_id"] ?? null);
     }
-    // Get a single week by id or week_id
     elseif (isset($query["id"])) {
         getWeekById($conn, $query["id"]);
     }
     elseif (isset($query["week_id"])) {
         getWeekById($conn, $query["week_id"]);
     }
-    // Get all weeks
     else {
         getAllWeeks($conn);
     }
-} else // ===============================
-// DELETE COMMENT (AND REPLIES)
-// ===============================
-if ($method === 'DELETE' && isset($_GET['action']) && $_GET['action'] === 'delete_comment') {
+}
 
-    $commentId = intval($_GET['id']);
+// DELETE COMMENT
+elseif ($method === 'DELETE' && ($query['action'] ?? '') === 'delete_comment') {
+
+    $commentId = cleanInt($query['id'] ?? 0);
 
     $stmt = $conn->prepare("DELETE FROM weekly_comments WHERE id = ?");
     $success = $stmt->execute([$commentId]);
 
-    echo json_encode([
+    sendResponse([
         "success" => $success,
         "message" => $success ? "Comment deleted" : "Delete failed"
     ]);
-    exit;
 }
 
-
-// ---------- POST: ADD COMMENT ----------
+// POST: ADD COMMENT
 elseif ($method === "POST" && ($query["action"] ?? "") === "weekly_comments") {
 
-    if (!is_array($input)) {
-        sendError("Invalid JSON body");
-    }
+    if (!is_array($input)) sendError("Invalid JSON");
 
     foreach (["week_id", "user_id", "comment_text"] as $field) {
-        if (!isset($input[$field])) {
-            sendError("Missing field: $field", 422);
-        }
+        if (!isset($input[$field])) sendError("Missing field: $field", 422);
     }
 
-    $week_id  = (int)$input["week_id"];
-    $user_id  = (int)$input["user_id"];
-    $text     = sanitizeInput($input["comment_text"]);
-    $parentId = isset($input["parent_comment_id"]) ? (int)$input["parent_comment_id"] : null;
+    $week_id  = cleanInt($input["week_id"]);
+    $user_id  = cleanInt($input["user_id"]);
+    $text     = trim($input["comment_text"]); // RAW text
+    $parentId = isset($input["parent_comment_id"]) ? cleanInt($input["parent_comment_id"]) : null;
 
     try {
         $stmt = $conn->prepare("
             INSERT INTO weekly_comments (week_id, user_id, comment_text, parent_comment_id)
             VALUES (?, ?, ?, ?)
         ");
-
         $stmt->execute([$week_id, $user_id, $text, $parentId]);
 
         sendResponse(["success" => true, "id" => $conn->lastInsertId()]);
-    } catch (PDOException $e) {
+    }
+    catch (PDOException $e) {
         sendError("DB error inserting comment: " . $e->getMessage(), 500);
     }
 }
 
-
-// ---------- POST: CREATE WEEK ----------
+// POST: CREATE WEEK
 elseif ($method === "POST") {
-    if (!is_array($input)) {
-        sendError("Invalid JSON body", 400);
-    }
     createWeek($conn, $input);
 }
 
-// ---------- PUT: UPDATE WEEK ----------
+// PUT: UPDATE WEEK
 elseif ($method === "PUT") {
-    if (!is_array($input)) {
-        sendError("Invalid JSON body", 400);
-    }
     updateWeek($conn, $input);
 }
 
-// ---------- DELETE: DELETE WEEK ----------
+// DELETE WEEK
 elseif ($method === "DELETE") {
     deleteWeek($conn, $query["id"] ?? 0);
 }
 
-// ---------- INVALID METHOD ----------
+// INVALID METHOD
 else {
     sendError("Method not allowed", 405);
 }
+
+?>

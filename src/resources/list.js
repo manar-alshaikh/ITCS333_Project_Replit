@@ -18,7 +18,7 @@ async function loadResources() {
             article.innerHTML = `
                 <h2>${resource.title}</h2>
                 <p>${resource.description}</p>
-                <a href="details.html?id=${resource.id}">
+                <a href="details.php?id=${resource.id}">
                     View Resource & Discussion
                 </a>
             `;

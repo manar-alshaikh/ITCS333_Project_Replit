@@ -1,0 +1,194 @@
+<!--
+<?php
+//only a logged-in Admin/Teacher can access this page:
+require_once __DIR__ . "/../../config/Config.php";
+if (!isLoggedIn() || !isAdmin())
+{ 
+    header("Location: ../auth/login.php");
+    exit();
+}
+?>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Assignment</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+         h1{text-align: center;}
+         legend{text-align: center; font-weight:bold;}
+         label{font-weight:bold;}
+         #update-assignment-form
+         {
+             padding-left: 3rem; 
+             padding-right: 3rem;
+             padding-top: 2rem; 
+             padding-bottom: 2rem;
+         }
+         #save-edit-button{background-color:#4CAF50; border-color:#4CAF50;}
+    </style>
+</head>
+<body>
+
+    <h1>Update Assignment</h1>
+    
+    <div id="status-message" style="display: none; padding: 10px; margin-bottom: 15px;"></div>
+
+<form id="update-assignment-form" style="display: none;">
+     <fieldset>
+        <input type="hidden" id="assignment-id" name="id">
+
+        <label for="assignment-title">Assignment Title</label>
+        <input id="assignment-title" type="text" name="title" required>
+
+        <label for="assignment-description">Description</label>
+        <textarea id="assignment-description" name="description" rows="5" required></textarea>
+
+        <label for="assignment-due-date">Due Date</label>
+        <input id="assignment-due-date" type="date" name="due_date" required>
+
+        <label for="assignment-files">Attached Files or Links (one per line)</label>
+        <textarea id="assignment-files" name="files" rows="3"></textarea>
+
+        <div class="button-group">
+            <button type="submit" id="save-edit-button">Update Assignment</button>
+            <button type="button" onclick="window.location.href='admin.html'">Cancel and Back</button>
+        </div>
+    </fieldset>
+</form>
+
+    <script>
+        const updateForm = document.getElementById("update-assignment-form");
+        const statusMessage = document.getElementById("status-message");
+
+        function displayStatus(message, isError = true)
+        {
+            statusMessage.textContent = message;
+            statusMessage.style.display = 'block';
+            statusMessage.style.backgroundColor = isError ? '#fdd' : '#dfd';
+            statusMessage.style.color = isError ? '#c00' : '#0c0';
+            statusMessage.style.border = isError ? '1px solid #c00' : '1px solid #0c0';
+            
+            if (!isError) {
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function getAssignmentIdFromUrl()
+        {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+
+        async function loadAssignmentDetails(assignmentId)
+        {
+            if (!assignmentId) {
+                displayStatus("Error: No Assignment ID provided in the URL.", true);
+                return;
+            }
+            try
+            {
+                // Fetch data for the specific assignment
+                const response = await fetch(`api/index.php?resource=assignments&id=${assignmentId}`);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    displayStatus(`Failed to load assignment: ${response.statusText}.`, true);
+                    console.error("API Fetch Error:", errorText);
+                    return;
+                }
+
+                const result = await response.json();
+
+                document.getElementById("assignment-id").value = result.id;
+                document.getElementById("assignment-title").value = result.title || '';
+                document.getElementById("assignment-description").value = result.description || '';
+                document.getElementById("assignment-due-date").value = result.due_date || '';
+                
+                const filesData = result.files;
+                if (Array.isArray(filesData)) {
+                    // Send array back to a single string for display in textarea
+                    document.getElementById("assignment-files").value = filesData.join('\n');
+                } else {
+                    document.getElementById("assignment-files").value = filesData || '';
+                }
+
+                updateForm.style.display = 'block';
+                displayStatus("Assignment loaded. Ready to edit.", false);
+
+            } catch (e)
+            { 
+                displayStatus(`Network or JSON error loading details: ${e.message}`, true);
+                console.error("Load Catch Error:", e);
+            }
+        }
+
+        async function handleUpdateSubmission(event)
+        {
+            event.preventDefault();
+            displayStatus("Saving changes...", false); 
+
+            const formData = new FormData(updateForm);
+            const updatedAssignment = Object.fromEntries(formData.entries());
+            
+            const assignmentId = updatedAssignment.id; 
+
+            try 
+            {
+              
+                const response = await fetch(`api/index.php?resource=assignments&id=${assignmentId}`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(updatedAssignment)
+                });
+
+                const responseText = await response.text();
+
+                // Check if the raw response starts with HTML (<) or is empty
+                if (!response.ok || responseText.startsWith('<') || responseText.trim() === '') {
+                    displayStatus(`Update failed: Server sent invalid response (HTTP ${response.status}). Check console for details.`, true);
+                    console.error("RAW SERVER RESPONSE:", responseText);
+                    return; 
+                }
+
+                const result = JSON.parse(responseText); 
+
+                if (result.success) 
+                {
+                    displayStatus('Assignment updated successfully! Redirecting...', false);
+                    setTimeout(() => 
+                    {
+                        window.location.href = 'admin.html';
+                    }, 1000); 
+                } 
+                else 
+                {
+                    displayStatus(`Update failed: ${result.error || result.message || 'Unknown error.'}`, true);
+                }
+            } 
+            catch (e) 
+            {
+                displayStatus(`Error processing response: ${e.message}. See console for details.`, true);
+                console.error("Final Catch Error:", e);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const id = getAssignmentIdFromUrl();
+            loadAssignmentDetails(id);
+            
+            if (updateForm) {
+                updateForm.addEventListener('submit', handleUpdateSubmission);
+            }
+        });
+    </script>
+</body>
+</html>

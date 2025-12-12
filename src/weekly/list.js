@@ -20,7 +20,7 @@ function createWeekArticle(week) {
   const description = document.createElement('p');
   description.textContent = week.description;
 
-  
+
   const detailsLink = document.createElement('a');
   detailsLink.href = `./details.php?id=${week.id}`;
   detailsLink.textContent = 'View Details & Discussion';
@@ -50,7 +50,7 @@ async function loadWeeks() {
     const weeks = result.data.map(w => ({
       id: Number(w.id),
       title: w.title,
-      startDate: w.start_date,     
+      startDate: w.start_date,
       description: w.description
     }));
 
@@ -68,8 +68,13 @@ async function loadWeeks() {
   }
 }
 
-
-
-
-
 loadWeeks();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("go-back-btn");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    window.location.href = "../auth/AdminPortal.php";
+  });
+});

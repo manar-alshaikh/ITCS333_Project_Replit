@@ -4,47 +4,67 @@
   Instructions:
   This page displays the full details for one assignment and allows for discussion.
 -->
+
+<!--<?php
+require_once __DIR__ . "/../../config/Config.php";
+//Allow any logged-in user (Teacher OR Student) to view the details of assignmets:
+if (!isLoggedIn()) {
+    header("Location: ../auth/login.php");
+    exit();
+}
+?>
+-->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment Details</title>
     <script src="details.js" defer></script>
-
     <!-- CSS FRAMEWORKS -->
-
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
     <!-- CUSTOM CSS FILES -->
-
+      <style>
+          #assignment-title{text-align: center;}
+          #discussion-forum h2{text-align: center;}
+          legend{text-align: center; font-weight:bold;}
+          label{font-weight:bold;}
+          #discussion-forum
+          {
+              padding-left: 3rem; 
+              padding-right: 3rem;
+              padding-top: 2rem; 
+              padding-bottom: 2rem;
+          }
+          article h2{font-size: 1.5rem;}
+          #assignment-due-date{text-align:center;}
+      </style>
     <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
 </head>
-
 <body>
     <header>
         <!-- dummy title -->
-        <h1 id="assignment-title">Assignment 1: HTML Basics</h1>
+        <h1 id="assignment-title"></h1>
     </header>
     <main>
-        <!-- Section 1: Assignment Information -->
         <article>
             <!-- dummy date in YYYY-MM-DD format -->
-            <p id="assignment-due-date">Due: 2023-10-15</p>
+            <p id="assignment-due-date"></p>
             <h2>Description</h2>
             <!-- dummy description -->
-            <p id="assignment-description">Create a basic HTML page with proper semantic structure including header, main, and footer sections. The
-                page should demonstrate understanding of basic HTML elements and their proper usage.</p>
+            <p id="assignment-description"></p>
 
             <h2>Attached Files & Links</h2>
             <ul id="assignment-files-list">
                 <!-- dummy links -->
-                <li><a href="#">assignment-brief.pdf</a></li>
-                <li><a href="#">html-cheatsheet.pdf</a></li>
-                <li><a href="#">example-template.html</a></li>
+                
             </ul>
         </article>
-
+        <!-- Section 1: Assignment Information -->
         <!-- Section 2: Discussion Forum -->
         <section id="discussion-forum">
             <h2>Questions & Discussion</h2>
@@ -52,17 +72,9 @@
             <div id="comment-list">
                 <!-- Dummy data for structure demonstration -->
                 <!-- First dummy discussion row -->
-                <article>
-                    <p>Is it okay to use a 'section' inside an 'article'?</p>
-                    <footer>Posted by: Jane Smith</footer>
-                </article>
+                 <li><a href="#"></a></li>
                 <!-- Second dummy discussion row -->
-                <article>
-                    <p>What is the maximum file size for our submission?</p>
-                    <footer>Posted by: John Davis</footer>
-                </article>
             </div>
-
             <!-- Subsection 2.2: Add a Comment Form -->
             <form action="#" id="comment-form">
                 <fieldset>
@@ -72,9 +84,9 @@
 
                     <button type="submit">Post Comment</button>
                 </fieldset>
+                <a href="list.html"><button type="button">Back</button></a>
             </form>
         </section>
     </main>
 </body>
-
 </html>

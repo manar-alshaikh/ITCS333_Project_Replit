@@ -72,7 +72,7 @@ if (!isset($_SESSION['user_id'])) {
     <div class="card">
         <h3>Assignments</h3>
         <p>View and submit your assignments and projects.</p>
-        <a href="../assignments/list.php"><button>View Assignments</button></a>
+        <a href="../assignments/list.html"><button>View Assignments</button></a>
     </div>
 
     <div class="card">

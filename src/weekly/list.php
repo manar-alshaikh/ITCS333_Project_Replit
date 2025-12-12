@@ -20,11 +20,11 @@ if (!isLoggedIn() || !isStudent()) {
     <!-- CSS FRAMEWORKS -->
 
     <!-- CUSTOM CSS FILES -->
-     <link rel="stylesheet" href="../common/css/background.css">
+    <link rel="stylesheet" href="../common/css/background.css">
     <link rel="stylesheet" href="../common/css/weekly-list.css">
 
     <!-- JS FILES -->
-     <script src="../common/js/background.js"></script>
+    <script src="../common/js/background.js"></script>
     <script src="../weekly/list.js" defer></script>
     <script src="../common/js/goBackButton.js"></script>
 
@@ -33,13 +33,13 @@ if (!isLoggedIn() || !isStudent()) {
 
 <body>
     <div class="bg-animation">
-    <div class="neural-network" id="neuralNetwork"></div>
-    <div class="particles" id="particles"></div>
-</div>
+        <div class="neural-network" id="neuralNetwork"></div>
+        <div class="particles" id="particles"></div>
+    </div>
 
     <header>
         <button id="go-back-btn">⮜</button>
-          <h1>Weekly Course Breakdown</h1>
+        <h1>Weekly Course Breakdown</h1>
     </header>
 
     <main>
