@@ -508,6 +508,37 @@ async function loadAndInitialize() {
   editForm.addEventListener("submit", handleEditSubmit);
   weeksTableBody.addEventListener("click", handleTableClick);
   cancelEditBtn.addEventListener("click", closeEditModal);
+
+  // Add instant validation for add form fields
+  const titleInput = document.getElementById("week-title");
+  const dateInput = document.getElementById("week-start-date");
+  const descInput = document.getElementById("week-description");
+  const linksInput = document.getElementById("week-links");
+
+  titleInput.addEventListener("blur", () => validateField(titleInput, "text"));
+  titleInput.addEventListener("input", debounce(() => validateField(titleInput, "text")));
+  
+  dateInput.addEventListener("blur", () => validateField(dateInput, "date"));
+  dateInput.addEventListener("change", () => validateField(dateInput, "date"));
+  
+  descInput.addEventListener("blur", () => validateField(descInput, "text"));
+  descInput.addEventListener("input", debounce(() => validateField(descInput, "text")));
+  
+  linksInput.addEventListener("blur", () => validateField(linksInput, "links"));
+  linksInput.addEventListener("input", debounce(() => validateField(linksInput, "links")));
+
+  // Add instant validation for edit form fields
+  editTitleInput.addEventListener("blur", () => validateField(editTitleInput, "text"));
+  editTitleInput.addEventListener("input", debounce(() => validateField(editTitleInput, "text")));
+  
+  editStartDateInput.addEventListener("blur", () => validateField(editStartDateInput, "date"));
+  editStartDateInput.addEventListener("change", () => validateField(editStartDateInput, "date"));
+  
+  editDescriptionInput.addEventListener("blur", () => validateField(editDescriptionInput, "text"));
+  editDescriptionInput.addEventListener("input", debounce(() => validateField(editDescriptionInput, "text")));
+  
+  editLinksInput.addEventListener("blur", () => validateField(editLinksInput, "links"));
+  editLinksInput.addEventListener("input", debounce(() => validateField(editLinksInput, "links")));
 }
 
 loadAndInitialize();
