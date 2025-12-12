@@ -22,6 +22,9 @@ if (!isLoggedIn())
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Assignments</title>
     <script src="/src/assignments/list.js" defer></script>
+    <!-- Background CSS/JS -->
+    <link rel="stylesheet" href="/src/common/css/background.css">
+    <script src="/src/common/js/background.js" defer></script>
     <!-- CSS FRAMEWORKS -->
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
     <!-- CUSTOM CSS FILES -->
@@ -37,6 +40,11 @@ if (!isLoggedIn())
 
 </head>
 <body>
+    <div class="bg-animation">
+        <div class="neural-network" id="neuralNetwork"></div>
+        <div class="particles" id="particles"></div>
+    </div>
+
     <header>
         <h1>Course Assignments</h1>
     </header>

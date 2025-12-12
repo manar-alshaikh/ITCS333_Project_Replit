@@ -20,8 +20,11 @@ if (!isLoggedIn() || !isAdmin()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <script src="admin.js" defer></script>
+    <script src="/src/assignments/admin.js" defer></script>
     <title>Manage Assignments</title>
+    <!-- Background CSS/JS -->
+    <link rel="stylesheet" href="/src/common/css/background.css">
+    <script src="/src/common/js/background.js" defer></script>
     <!-- CSS FRAMEWORKS -->
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
     <!-- CUSTOM CSS FILES -->
@@ -52,6 +55,11 @@ if (!isLoggedIn() || !isAdmin()) {
 
 </head>
 <body>
+    <div class="bg-animation">
+        <div class="neural-network" id="neuralNetwork"></div>
+        <div class="particles" id="particles"></div>
+    </div>
+
     <header>
         <h1>Manage Assignments</h1>
     </header>
