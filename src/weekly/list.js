@@ -39,7 +39,7 @@ function createWeekArticle(week) {
 
 async function loadWeeks() {
   try {
-    const response = await fetch('/weekly/api/index.php');
+    const response = await fetch('/api/weekly');
     const result = await response.json();
 
     if (!result.success) {

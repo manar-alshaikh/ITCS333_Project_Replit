@@ -1,7 +1,3 @@
-<!--
-  Admin View - Course Resources
-  This page allows the teacher/admin to manage all course resources (CRUD).
--->
 <?php
 require_once __DIR__ . "/../../config/Config.php";
 
@@ -10,6 +6,10 @@ if (!isLoggedIn() || !isAdmin()) {
     exit();
 }
 ?>
+<!--
+  Admin View - Course Resources
+  This page allows the teacher/admin to manage all course resources (CRUD).
+-->
 
 <!DOCTYPE html>
 <html lang="en">

@@ -2,7 +2,7 @@
 
 const listSection = document.querySelector("#resource-list-section");
 
-const API_URL = "/resources/api/index.php";
+const API_URL = "/api/resources";
 
 async function loadResources() {
     try {

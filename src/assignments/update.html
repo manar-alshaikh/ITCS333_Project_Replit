@@ -97,7 +97,7 @@ if (!isLoggedIn() || !isAdmin())
             try
             {
                 // Fetch data for the specific assignment
-                const response = await fetch(`/assignments/api/index.php?resource=assignments&id=${assignmentId}`);
+                const response = await fetch(`/api/assignments?resource=assignments&id=${assignmentId}`);
                 
                 if (!response.ok) {
                     const errorText = await response.text();
@@ -144,7 +144,7 @@ if (!isLoggedIn() || !isAdmin())
             try 
             {
               
-                const response = await fetch(`/assignments/api/index.php?resource=assignments&id=${assignmentId}`, {
+                const response = await fetch(`/api/assignments?resource=assignments&id=${assignmentId}`, {
                     method: 'PUT',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(updatedAssignment)

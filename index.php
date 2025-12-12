@@ -112,6 +112,16 @@ switch ($path) {
         include __DIR__ . "/src/weekly/api/index.php";
         break;
 
+    case "api/weekly/weeks":
+        header('Content-Type: application/json');
+        readfile(__DIR__ . "/src/weekly/api/weeks.json");
+        break;
+
+    case "api/weekly/comments":
+        header('Content-Type: application/json');
+        readfile(__DIR__ . "/src/weekly/api/comments.json");
+        break;
+
     case "api/resources":
         include __DIR__ . "/src/resources/api/index.php";
         break;

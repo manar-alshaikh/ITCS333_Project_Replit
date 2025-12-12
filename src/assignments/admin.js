@@ -109,7 +109,7 @@ async function handleAddAssignment(event)
   //add new assignment to assignmets array:
   assignments.push(assignment);*/
   const newAssignmentData = {title: title,description: description, due_date: due_date, files: files};
-  const response = await fetch("/assignments/api/index.php?resource=assignments", {method: 'POST',headers: {'Content-Type': 'application/json'},body: JSON.stringify(newAssignmentData)});
+  const response = await fetch("/api/assignments?resource=assignments", {method: 'POST',headers: {'Content-Type': 'application/json'},body: JSON.stringify(newAssignmentData)});
   const result = await response.json();
   if (result.success && result.assignment)
     {
@@ -143,7 +143,7 @@ async function handleTableClick(event)
       //get `data-id`
       const assignmentId = event.target.dataset.id;
       //filtering out the assignment with the matching ID:assignments = assignments.filter(a => a.id !==id);
-      const response = await fetch(`/assignments/api/index.php?resource=assignments&id=${assignmentId}`, { method: 'DELETE'});
+      const response = await fetch(`/api/assignments?resource=assignments&id=${assignmentId}`, { method: 'DELETE'});
       const result = await response.json();
       if (result.success)
         {
@@ -191,7 +191,7 @@ async function handleTableClick(event)
 async function loadAndInitialize()
 {
   //get data from assignments.json using fetch:const data = await fetch("assignments.json");
-  const response = await fetch("/assignments/api/index.php?resource=assignments");
+  const response = await fetch("/api/assignments?resource=assignments");
   //parse:data = await data.json();
   try
   {
