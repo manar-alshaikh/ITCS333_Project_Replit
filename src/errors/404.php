@@ -36,7 +36,16 @@
 
         h1 {
             font-size: 4rem;
-            color: #ff4d4d;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neonTitleGlow 1.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonTitleGlow {
+            from { filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.5)); }
+            to   { filter: drop-shadow(0 0 18px rgba(255, 0, 255, 0.7)); }
         }
 
         p {
