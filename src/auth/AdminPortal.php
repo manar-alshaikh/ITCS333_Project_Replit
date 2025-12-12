@@ -190,7 +190,7 @@ if ($action === 'students') {
     <div class="card">
         <h3>Assignments</h3>
         <p>Create and manage assignments and grading.</p>
-        <a href="../assignments/admin.html"><button>Manage Assignments</button></a>
+        <a href="/assignments/admin"><button>Manage Assignments</button></a>
     </div>
 
     <div class="card">
