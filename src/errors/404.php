@@ -6,8 +6,8 @@
     <title>404 - Page Not Found</title>
 
     <!-- FIXED PATHS -->
-    <link rel="stylesheet" href="/common/css/background.css">
-    <script src="/common/js/background.js" defer></script>
+    <link rel="stylesheet" href="/src/common/css/background.css">
+    <script src="/src/common/js/background.js" defer></script>
 
     <style>
         body {
