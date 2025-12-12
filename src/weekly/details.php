@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../config/Config.php';
 
 // Check if user is logged in
 if (!isLoggedIn()) {
-    header("Location: ../auth/login.php");
+    header("Location: /login");
     exit();
 }
 

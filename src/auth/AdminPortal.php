@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../config/Config.php';
 
 if (!isLoggedIn() || !isAdmin()) {
-    header("Location: login.php");
+    header("Location: /login");
     exit();
 }
 
@@ -139,13 +139,13 @@ if ($action === 'students') {
 <!-- NAVIGATION -->
 <div class="nav">
     <div class="nav-left">
-        <a href="AdminPortal.php?action=dashboard">Dashboard</a>
-        <a href="AdminPortal.php?action=students">Students</a>
-        <a href="AdminPortal.php?action=password">Password</a>
+        <a href="/admin?action=dashboard">Dashboard</a>
+        <a href="/admin?action=students">Students</a>
+        <a href="/admin?action=password">Password</a>
     </div>
 
     <div class="nav-right">
-        <a href="logout.php">Logout</a>
+        <a href="/logout">Logout</a>
     </div>
 </div>
 

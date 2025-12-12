@@ -5,7 +5,7 @@
 require_once __DIR__ . "/../../config/Config.php";
 
 if (!isLoggedIn() || !isStudent()) {
-    header("Location: ../auth/login.php");
+    header("Location: /login");
     exit();
 }
 ?>

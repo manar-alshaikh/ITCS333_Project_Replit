@@ -6,10 +6,10 @@ ini_set('display_errors', 1);
 
 if (isset($_SESSION['user_id'])) {
     if ($_SESSION['role'] === 'admin') {
-        header("Location: AdminPortal.php");
+        header("Location: /admin");
         exit();
     } else {
-        header("Location: dashboard.php");
+        header("Location: /dashboard");
         exit();
     }
 }
@@ -39,10 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
 
             // REDIRECT based on role
             if ($user['role'] === 'admin') {
-                header("Location: AdminPortal.php");
+                header("Location: /admin");
                 exit();
             } else {
-                header("Location: dashboard.php");
+                header("Location: /dashboard");
                 exit();
             }
         } 

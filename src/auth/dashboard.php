@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../config/Config.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: /login");
     exit();
 }
 ?>
@@ -30,10 +30,10 @@ if (!isset($_SESSION['user_id'])) {
 
 <div class="nav">
     <div class="nav-left">
-        <a href="dashboard.php">Dashboard</a>
+        <a href="/dashboard">Dashboard</a>
 
         <?php if (isAdmin()): ?>
-            <a href="AdminPortal.php">Admin Portal</a>
+            <a href="/admin">Admin Portal</a>
         <?php endif; ?>
 
         <?php if (isInstructor()): ?>
@@ -42,7 +42,7 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
     <div class="nav-right">
-        <a href="logout.php">Logout</a>
+        <a href="/logout">Logout</a>
     </div>
 </div>
 

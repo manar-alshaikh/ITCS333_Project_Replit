@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../../config/Config.php";
 
 if (!isLoggedIn() || !isAdmin()) {
-    header("Location: ../auth/login.php");
+    header("Location: /login");
     exit();
 }
 
