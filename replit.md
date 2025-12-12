@@ -66,6 +66,9 @@ Uses PostgreSQL with environment variables:
 - `/api/auth` - Authentication API
 
 ## Recent Changes
+- **2025-12-12**: Fixed assignment creation database issue
+  - Added missing `files` column to assignments table
+  - Made `created_by` column nullable to allow assignment creation
 - **2025-12-12**: Fixed static file serving in router
   - Added static file handler to let PHP server serve CSS/JS/images directly
   - Animated background now works on 404 error page and all pages
