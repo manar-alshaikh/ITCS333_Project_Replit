@@ -1,6 +1,5 @@
 <?php
-session_start();
-include '../../config/Config.php';
+require_once __DIR__ . '/../../config/Config.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -15,9 +14,9 @@ if (!isset($_SESSION['user_id'])) {
         <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Course System</title>
-     <link rel="stylesheet" href="../common/css/background.css">
-        <link rel="stylesheet" href="../common/css/dashboard.css">
-         <script src="../common/js/background.js"></script>
+     <link rel="stylesheet" href="/src/common/css/background.css">
+        <link rel="stylesheet" href="/src/common/css/dashboard.css">
+         <script src="/src/common/js/background.js"></script>
 </head>
 <body>
     <div class="bg-animation">

@@ -35,13 +35,12 @@ if (!isLoggedIn() || !isStudent()) {
      </style>
 
      <!-- JS -->
-     <!-- <script src="../resources/list.js" defer></script> -->
-     <link rel="stylesheet" href="../common/css/background.css">
-<link rel="stylesheet" href="../common/css/weekly-list.css">
+     <link rel="stylesheet" href="/src/common/css/background.css">
+<link rel="stylesheet" href="/src/common/css/weekly-list.css">
 
-<script src="../common/js/background.js"></script>
-<script src="../common/js/goBackButton.js" defer></script>
-<script src="list.js" defer></script>
+<script src="/src/common/js/background.js"></script>
+<script src="/src/common/js/goBackButton.js" defer></script>
+<script src="/src/resources/list.js" defer></script>
 
 </head>
 

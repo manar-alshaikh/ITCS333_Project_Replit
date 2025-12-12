@@ -1,5 +1,5 @@
 <?php
-include '../../config/Config.php';
+require_once __DIR__ . '/../../config/Config.php';
 
 // Check if user is logged in
 if (!isLoggedIn()) {
@@ -26,8 +26,8 @@ $isAdmin          = function_exists('isAdmin') ? isAdmin() : false;
     <!-- CSS FRAMEWORKS -->
 
     <!-- CUSTOM CSS FILES -->
-    <link rel="stylesheet" href="../common/css/background.css">
-    <link rel="stylesheet" href="../common/css/weekly-details.css">
+    <link rel="stylesheet" href="/src/common/css/background.css">
+    <link rel="stylesheet" href="/src/common/css/weekly-details.css">
 
     <!-- JS GLOBALS FROM PHP -->
     <script>
@@ -35,12 +35,12 @@ $isAdmin          = function_exists('isAdmin') ? isAdmin() : false;
     window.LOGGED_IN_USER_ID = <?= $loggedInUserId !== null ? $loggedInUserId : 'null' ?>;
     window.LOGGED_IN_USER_NAME = <?= json_encode($loggedInUsername) ?>;
 
-    window.BACK_URL = <?= $isAdmin ? '"../weekly/admin.php"' : '"../weekly/list.php"' ?>;
+    window.BACK_URL = <?= $isAdmin ? '"/weekly/admin"' : '"/weekly/list"' ?>;
     </script>
 
     <!-- JS FILES -->
-    <script src="../common/js/background.js"></script>
-    <script src="../weekly/details.js" defer></script>
+    <script src="/src/common/js/background.js"></script>
+    <script src="/src/weekly/details.js" defer></script>
 </head>
 
 <body>

@@ -65,26 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS')
 // DATABASE CONNECTION
 // ============================================================================
 
-// TODO: Include the database connection class
-require_once('../../config/Config.php');
+// Include the database connection
+require_once __DIR__ . '/../../../config/Config.php';
 
-// TODO: Create database connection
-$host = "localhost";
-$user = "admin";
-$password = "password123";
-$database = "course";
-
-// TODO: Set PDO to throw exceptions on errors
-try
-{
-    $db = new PDO("mysql:host=$host;dbname=$database",$user,$password);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $error)
-{
-    http_response_code(500);
-    $res = ["error" => "Database connection failed: " . $error->getMessage()];
-}
+// Use the connection from Config.php
+$db = $conn;
 
 // ============================================================================
 // REQUEST PARSING

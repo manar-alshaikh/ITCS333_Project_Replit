@@ -39,12 +39,11 @@ if (!isLoggedIn() || !isAdmin()) {
     </style>
 
     <!-- Link JS -->
-    <script src="admin.js" defer></script>
-    <link rel="stylesheet" href="../common/css/background.css">
-<link rel="stylesheet" href="../common/css/weekly-admin.css">
-<script src="../common/js/background.js"></script>
-<script src="../common/js/goBackButton.js" defer></script>
-<script src="admin.js" defer></script>
+    <link rel="stylesheet" href="/src/common/css/background.css">
+<link rel="stylesheet" href="/src/common/css/weekly-admin.css">
+<script src="/src/common/js/background.js"></script>
+<script src="/src/common/js/goBackButton.js" defer></script>
+<script src="/src/resources/admin.js" defer></script>
 
 </head>
 

@@ -22,14 +22,14 @@ if (!isLoggedIn() || !isAdmin()) {
     <!-- CSS FRAMEWORKS -->
 
     <!-- CUSTOM CSS FILES -->
-    <link rel="stylesheet" href="../common/css/background.css">
-    <link rel="stylesheet" href="../common/css/weekly-admin.css">
+    <link rel="stylesheet" href="/src/common/css/background.css">
+    <link rel="stylesheet" href="/src/common/css/weekly-admin.css">
 
     <!-- JS FILES -->
-    <script src="../common/js/background.js"></script>
-    <script src="../weekly/admin.js" defer></script>
+    <script src="/src/common/js/background.js"></script>
+    <script src="/src/weekly/admin.js" defer></script>
     <script>
-    window.BACK_URL = <?= isAdmin() ? '"../weekly/admin.php"' : '"../weekly/list.php"' ?>;
+    window.BACK_URL = <?= isAdmin() ? '"/weekly/admin"' : '"/weekly/list"' ?>;
     </script>
 
 </head>

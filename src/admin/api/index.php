@@ -41,11 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// TODO: Include the database connection class
-// Assume the Database class has a method getConnection() that returns a PDO instance
-include 'Config.php';
+// Include the database connection
+require_once __DIR__ . '/../../../config/Config.php';
 
-// TODO: Get the PDO database connection
+// Get the PDO database connection
 $db = $conn;
 
 // TODO: Get the HTTP request method

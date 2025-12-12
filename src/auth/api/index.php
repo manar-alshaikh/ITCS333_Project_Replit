@@ -73,135 +73,68 @@ if (strlen($password) < 8) {
 }
 
 // --- Database Connection ---
-// TODO: Get the database connection using the provided function
-// Assume getDBConnection() returns a PDO instance with error mode set to exception
-// The function is defined elsewhere (e.g., in a config file or db.php)
-function getDBConnection() {
-    $host = 'localhost';
-    $dbname = 'course_page';
-    $username = 'root';
-    $password = '';
-    
-    try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $pdo;
-    } catch (PDOException $e) {
-        die("Connection failed: " . $e->getMessage());
-    }
-}
-
-$db = getDBConnection();
-if (!$db) {
-    echo json_encode(['success' => false, 'message' => 'Database connection failed']);
-    exit;
-}
+// Include the database connection from Config.php
+require_once __DIR__ . '/../../config/Config.php';
+$db = $conn;
 // TODO: Wrap database operations in a try-catch block to handle PDO exceptions
 // This ensures you can return a proper JSON error response if something goes wrong
 try {
 
     // --- Prepare SQL Query ---
-    // TODO: Write a SQL SELECT query to find the user by email
-    // Select the following columns: id, name, email, password
-    // Use a WHERE clause to filter by email
-    // IMPORTANT: Use a placeholder (? or :email) for the email value
-    // This prevents SQL injection attacks
-    $sql = "SELECT id, name, email, password FROM users WHERE email = :email";
-
-    // --- Prepare the Statement ---
-    // TODO: Prepare the SQL statement using the PDO prepare method
-    // Store the result in a variable
-    // Prepared statements protect against SQL injection
+    $sql = "SELECT id, username, email, password_hash, role, student_id FROM users WHERE email = :email AND is_active = true";
     $stmt = $db->prepare($sql);
-
-    // --- Execute the Query ---
-    // TODO: Execute the prepared statement with the email parameter
-    // Bind the email value to the placeholder
     $stmt->execute(['email' => $email]);
-
-    // --- Fetch User Data ---
-    // TODO: Fetch the user record from the database
-    // Use the fetch method with PDO::FETCH_ASSOC
-    // This returns an associative array of the user data, or false if no user found
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // --- Verify User Exists and Password Matches ---
-    // TODO: Check if a user was found
-    // The fetch method returns false if no record matches
     if (!$user) {
         echo json_encode(['success' => false, 'message' => 'Invalid email or password']);
         exit;
     }
 
-    // TODO: If user exists, verify the password
-    // Use password_verify() to compare the submitted password with the hashed password from database
-    // This function returns true if they match, false otherwise
-    //
-    // NOTE: This assumes passwords are stored as hashes using password_hash()
-    // Never store passwords in plain text!
-     if (!password_verify($password, $user['password'])) {
+    if (!password_verify($password, $user['password_hash'])) {
         echo json_encode(['success' => false, 'message' => 'Invalid email or password']);
         exit;
     }
 
     // --- Handle Successful Authentication ---
-    // TODO: If password verification succeeds:
-    
-    
-        // TODO: Store user information in session variables
-        // Store: user_id, user_name, user_email, logged_in
-        // DO NOT store the password in the session!
-        $_SESSION['user_id'] = $user['student_id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['role'] = $user['role'];
-        $_SESSION['full_name'] = $user['full_name'];
-        $_SESSION['logged_in'] = true;
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['role'] = $user['role'];
+    $_SESSION['logged_in'] = true;
 
-        setcookie('user_id', $user['student_id'], time() + (86400 * 30), "/");
-        setcookie('username', $user['username'], time() + (86400 * 30), "/");
-        setcookie('role', $user['role'], time() + (86400 * 30), "/");
-        $updateStmt = $db->prepare("UPDATE users SET last_login = NOW() WHERE student_id = ?");
-        $updateStmt->execute([$user['student_id']]);
+    setcookie('user_id', $user['id'], time() + (86400 * 30), "/");
+    setcookie('username', $user['username'], time() + (86400 * 30), "/");
+    setcookie('role', $user['role'], time() + (86400 * 30), "/");
     
-        // TODO: Prepare a success response array
-        // Include:
-        // - 'success' => true
-        // - 'message' => 'Login successful'
-        // - 'user' => array with safe user details (id, name, email)
-        //
-        // IMPORTANT: Do NOT include the password in the response
-        $response = [
+    $updateStmt = $db->prepare("UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?");
+    $updateStmt->execute([$user['id']]);
+
+    $response = [
         'success' => true,
         'message' => 'Login successful',
         'user' => [
-            'student_id' => $user['student_id'],
+            'id' => $user['id'],
             'username' => $user['username'],
-            'role' => $user['role'],
-            'full_name' => $user['full_name']
+            'email' => $user['email'],
+            'role' => $user['role']
         ],
-        'redirect' => 'HomePage.php' // Redirect to your main page
-        ];
-    
-        echo json_encode($response);
-        exit;
-    
-        } catch (PDOException $e) {
-        error_log("Database error: " . $e->getMessage());
-        
+        'redirect' => '/dashboard'
+    ];
 
-        // TODO: Encode the response array as JSON and echo it
-        echo json_encode(['success' => false, 'message' => 'Database error occurred']);
-        
-        // TODO: Exit the script to prevent further execution
-        exit;
-    }
+    echo json_encode($response);
+    exit;
 
+} catch (PDOException $e) {
+    error_log("Database error: " . $e->getMessage());
+    echo json_encode(['success' => false, 'message' => 'Database error occurred']);
+    exit;
+}
+?>
+<?php
+// Unreachable code removed
+if (false) {
     // --- Handle Failed Authentication ---
-    // TODO: If user doesn't exist OR password verification fails:
-    if (!$user || !password_verify($password, $user['password'])) {
-    
-        // TODO: Prepare an error response array
-        // Include:
         // - 'success' => false
         // - 'message' => 'Invalid email or password'
         //

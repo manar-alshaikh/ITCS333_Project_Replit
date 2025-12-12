@@ -1,5 +1,5 @@
 <?php
-include '../../config/Config.php';
+require_once __DIR__ . '/../../config/Config.php';
 
 // Check if user is logged in and is admin
 if (!isLoggedIn() || !isStudent()) {
@@ -20,13 +20,13 @@ if (!isLoggedIn() || !isStudent()) {
     <!-- CSS FRAMEWORKS -->
 
     <!-- CUSTOM CSS FILES -->
-    <link rel="stylesheet" href="../common/css/background.css">
-    <link rel="stylesheet" href="../common/css/weekly-list.css">
+    <link rel="stylesheet" href="/src/common/css/background.css">
+    <link rel="stylesheet" href="/src/common/css/weekly-list.css">
 
     <!-- JS FILES -->
-    <script src="../common/js/background.js"></script>
-    <script src="../weekly/list.js" defer></script>
-    <script src="../common/js/goBackButton.js"></script>
+    <script src="/src/common/js/background.js"></script>
+    <script src="/src/weekly/list.js" defer></script>
+    <script src="/src/common/js/goBackButton.js"></script>
 
 
 </head>

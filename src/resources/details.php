@@ -20,8 +20,8 @@ $isAdmin          = function_exists('isAdmin') ? isAdmin() : false;
     <title>Resource Details</title>
 
     <!-- CSS FILES -->
-    <link rel="stylesheet" href="../common/css/background.css">
-    <link rel="stylesheet" href="../common/css/weekly-details.css">
+    <link rel="stylesheet" href="/src/common/css/background.css">
+    <link rel="stylesheet" href="/src/common/css/weekly-details.css">
 
     <!-- SESSION VARIABLES PASSED TO JS -->
     <script>
@@ -31,9 +31,9 @@ $isAdmin          = function_exists('isAdmin') ? isAdmin() : false;
     </script>
 
     <!-- JS FILES -->
-    <script src="../common/js/background.js"></script>
-    <script src="../common/js/goBackButton.js" defer></script>
-    <script src="details.js" defer></script>
+    <script src="/src/common/js/background.js"></script>
+    <script src="/src/common/js/goBackButton.js" defer></script>
+    <script src="/src/resources/details.js" defer></script>
 </head>
 
 <body>

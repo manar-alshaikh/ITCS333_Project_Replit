@@ -1,6 +1,5 @@
 <?php
-session_start();
-include '../../config/Config.php';
+require_once __DIR__ . '/../../config/Config.php';
 
 if (!isLoggedIn() || !isAdmin()) {
     header("Location: login.php");
@@ -119,11 +118,11 @@ if ($action === 'students') {
     <title>Admin Portal</title>
 
     <!-- NEON THEME -->
-    <link rel="stylesheet" href="../common/css/background.css">
-    <link rel="stylesheet" href="../common/css/adminPortal.css">
+    <link rel="stylesheet" href="/src/common/css/background.css">
+    <link rel="stylesheet" href="/src/common/css/adminPortal.css">
 
     <!-- JS Background -->
-    <script src="../common/js/background.js" defer></script>
+    <script src="/src/common/js/background.js" defer></script>
 </head>
 
 <body>
