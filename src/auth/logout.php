@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Unset all session variables
 $_SESSION = array();
@@ -22,6 +24,6 @@ setcookie('username', '', time() - 3600, "/");
 setcookie('role', '', time() - 3600, "/");
 
 // Redirect to login page
-header("Location: login.php");
+header("Location: /login");
 exit();
 ?>
