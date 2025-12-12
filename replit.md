@@ -66,6 +66,17 @@ Uses PostgreSQL with environment variables:
 - `/api/auth` - Authentication API
 
 ## Recent Changes
+- **2025-12-12**: Fixed static file serving in router
+  - Added static file handler to let PHP server serve CSS/JS/images directly
+  - Animated background now works on 404 error page and all pages
+- **2025-12-12**: Added instant form validation to Weekly admin
+  - Validates on blur and as-you-type (debounced)
+  - Date validation with year bounds (2020-2030)
+- **2025-12-12**: Fixed logout session handling
+  - Now checks if session already active before starting
+  - Fixed redirect path to use router
+- **2025-12-12**: Added animated background to all assignment pages
+- **2025-12-12**: Fixed PostgreSQL boolean comparison in resources API
 - **2025-12-12**: Fixed all path references across the codebase
   - Converted all relative paths (../common/, ./api/) to absolute paths (/src/common/, /weekly/api/)
   - Updated HTML back button links to use router paths

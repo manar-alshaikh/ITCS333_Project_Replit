@@ -1,4 +1,11 @@
 <?php
+// Let PHP built-in server handle static files
+$requestUri = $_SERVER["REQUEST_URI"];
+$filePath = __DIR__ . parse_url($requestUri, PHP_URL_PATH);
+if (php_sapi_name() === 'cli-server' && is_file($filePath)) {
+    return false;
+}
+
 session_start();
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
