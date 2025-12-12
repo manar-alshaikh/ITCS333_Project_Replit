@@ -7,7 +7,7 @@ const descriptionInput = document.querySelector("#resource-description");
 const linkInput = document.querySelector("#resource-link");
 
 // API BASE URL
-const API_URL = "./api/index.php";
+const API_URL = "/resources/api/index.php";
 
 // Load all resources from the API
 async function loadResources() {

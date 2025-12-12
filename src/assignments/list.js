@@ -17,7 +17,7 @@ const assignmentList = document.getElementById("assignment-list-section");
 
 // --- Functions ---
 //API:
- const API = "api/index.php?resource=assignments";
+ const API = "/assignments/api/index.php?resource=assignments";
 /**
  * TODO: Implement the createAssignmentArticle function.
  * It takes one assignment object {id, title, dueDate, description}.
@@ -38,7 +38,7 @@ function createAssignmentArticle(assignment)
   const a = document.createElement("a");
   //assigning data to each new element:
   a.textContent = "View Details";
-  a.href=`details.html?id=${id}`;
+  a.href=`/assignments/details?id=${id}`;
   h2.textContent = `Assignment ${id}: ${title}`;
   p1.textContent="Due:" + ` ${due_date}`;
   p2.textContent= description;

@@ -59,13 +59,13 @@ if (!isset($_SESSION['user_id'])) {
     <div class="card">
         <h3>Resources</h3>
         <p>Access learning materials, documents, and study resources.</p>
-        <a href="../resources/list.php"><button>View Resources</button></a>
+        <a href="/resources/list"><button>View Resources</button></a>
     </div>
 
     <div class="card">
         <h3>Weekly Breakdown</h3>
         <p>Check out this week's learning schedule and topics.</p>
-        <a href="../weekly/list.php"><button>Go to Weekly</button></a>
+        <a href="/weekly/list"><button>Go to Weekly</button></a>
     </div>
 
     <div class="card">

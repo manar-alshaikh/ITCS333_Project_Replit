@@ -22,7 +22,7 @@ function createWeekArticle(week) {
 
 
   const detailsLink = document.createElement('a');
-  detailsLink.href = `./details.php?id=${week.id}`;
+  detailsLink.href = `/weekly/details?id=${week.id}`;
   detailsLink.textContent = 'View Details & Discussion';
 
   article.appendChild(heading);
@@ -39,7 +39,7 @@ function createWeekArticle(week) {
 
 async function loadWeeks() {
   try {
-    const response = await fetch('./api/index.php');
+    const response = await fetch('/weekly/api/index.php');
     const result = await response.json();
 
     if (!result.success) {
@@ -75,6 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!btn) return;
 
   btn.addEventListener("click", () => {
-    window.location.href = "../auth/AdminPortal.php";
+    window.location.href = "/admin";
   });
 });

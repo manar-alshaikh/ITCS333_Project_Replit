@@ -188,7 +188,7 @@ async function initializePage()
   if(currentAssignmentId===null){console.log("Error! No ID found."); return;};
   //fetch:
   try{
-    const [assignmentsResponse, commentsResponse] = await Promise.all([fetch(`api/index.php?resource=assignments&id=${currentAssignmentId}`), fetch(`api/index.php?resource=comments&id=${currentAssignmentId}`)]);
+    const [assignmentsResponse, commentsResponse] = await Promise.all([fetch(`/assignments/api/index.php?resource=assignments&id=${currentAssignmentId}`), fetch(`/assignments/api/index.php?resource=comments&id=${currentAssignmentId}`)]);
     if (!assignmentsResponse.ok || !commentsResponse.ok) 
       {
         throw new Error('Failed to fetch data from the API.');

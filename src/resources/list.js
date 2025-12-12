@@ -2,7 +2,7 @@
 
 const listSection = document.querySelector("#resource-list-section");
 
-const API_URL = "../resources/api/index.php";
+const API_URL = "/resources/api/index.php";
 
 async function loadResources() {
     try {
@@ -18,7 +18,7 @@ async function loadResources() {
             article.innerHTML = `
                 <h2>${resource.title}</h2>
                 <p>${resource.description}</p>
-                <a href="details.php?id=${resource.id}">
+                <a href="/resources/details?id=${resource.id}">
                     View Resource & Discussion
                 </a>
             `;

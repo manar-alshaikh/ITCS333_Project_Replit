@@ -65,7 +65,7 @@ function escapeHtml(text) {
 
 async function deleteComment(id) {
     try {
-        const res = await fetch(`./api/index.php?action=delete_comment&id=${id}`, {
+        const res = await fetch(`/weekly/api/index.php?action=delete_comment&id=${id}`, {
             method: "DELETE"
         });
         const data = await res.json();
@@ -187,7 +187,7 @@ async function handleReplySubmit(e, parentCommentId) {
         parent_comment_id: parentCommentId
     };
 
-    const res = await fetch("./api/index.php?action=weekly_comments", {
+    const res = await fetch("/weekly/api/index.php?action=weekly_comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -213,7 +213,7 @@ async function handleAddComment(e) {
         comment_text: text
     };
 
-    const res = await fetch("./api/index.php?action=weekly_comments", {
+    const res = await fetch("/weekly/api/index.php?action=weekly_comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -235,7 +235,7 @@ async function loadWeek() {
         return;
     }
 
-    const res = await fetch(`./api/index.php?id=${currentWeekId}`);
+    const res = await fetch(`/weekly/api/index.php?id=${currentWeekId}`);
     const data = await res.json();
 
     if (data.success) {
@@ -247,7 +247,7 @@ async function loadWeek() {
 
 
 async function loadComments() {
-    const res = await fetch(`./api/index.php?resource=weekly_comments&week_id=${currentWeekId}`);
+    const res = await fetch(`/weekly/api/index.php?resource=weekly_comments&week_id=${currentWeekId}`);
     const data = await res.json();
 
     if (!data.success) {

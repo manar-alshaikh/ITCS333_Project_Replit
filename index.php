@@ -86,6 +86,10 @@ switch ($path) {
         include __DIR__ . "/src/assignments/admin.html";
         break;
 
+    case "assignments/update":
+        include __DIR__ . "/src/assignments/update.html";
+        break;
+
 
     // ----------------------------------------------
     // ADMIN USERS PAGE
@@ -118,6 +122,33 @@ switch ($path) {
 
     case "api/admin/users":
         include __DIR__ . "/src/admin/api/index.php";
+        break;
+
+
+    // ----------------------------------------------
+    // DIRECT FILE API ROUTES (for JS file access)
+    // ----------------------------------------------
+
+    case "weekly/api/index.php":
+        include __DIR__ . "/src/weekly/api/index.php";
+        break;
+
+    case "weekly/api/weeks.json":
+        header('Content-Type: application/json');
+        readfile(__DIR__ . "/src/weekly/api/weeks.json");
+        break;
+
+    case "weekly/api/comments.json":
+        header('Content-Type: application/json');
+        readfile(__DIR__ . "/src/weekly/api/comments.json");
+        break;
+
+    case "resources/api/index.php":
+        include __DIR__ . "/src/resources/api/index.php";
+        break;
+
+    case "assignments/api/index.php":
+        include __DIR__ . "/src/assignments/api/index.php";
         break;
 
 

@@ -178,13 +178,13 @@ if ($action === 'students') {
  <div class="card">
         <h3>Resources</h3>
         <p>Manage and organize all learning resources.</p>
-        <a href="../resources/admin.php"><button>Manage Resources</button></a>
+        <a href="/resources/admin"><button>Manage Resources</button></a>
     </div>
 
     <div class="card">
         <h3>Weekly Breakdown</h3>
         <p>Create and manage weekly schedules and content.</p>
-        <a href="../weekly/admin.php"><button>Manage Weekly</button></a>
+        <a href="/weekly/admin"><button>Manage Weekly</button></a>
     </div>
 
     <div class="card">

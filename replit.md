@@ -46,13 +46,32 @@ Uses PostgreSQL with environment variables:
 
 ## Key Routes
 - `/login` - Login page
-- `/dashboard` - User dashboard
+- `/dashboard` - User dashboard  
 - `/admin` - Admin portal
 - `/weekly/list` - Weekly breakdown list
+- `/weekly/details?id=X` - Weekly details page
+- `/weekly/admin` - Manage weekly content
 - `/resources/list` - Course resources
-- `/assignments/list` - Assignments
+- `/resources/details?id=X` - Resource details page
+- `/resources/admin` - Manage resources
+- `/assignments/list` - Assignments list
+- `/assignments/details?id=X` - Assignment details
+- `/assignments/admin` - Manage assignments
+- `/assignments/update?id=X` - Update assignment
+
+## API Routes
+- `/weekly/api/index.php` - Weekly API
+- `/resources/api/index.php` - Resources API
+- `/assignments/api/index.php` - Assignments API
+- `/api/auth` - Authentication API
 
 ## Recent Changes
+- **2025-12-12**: Fixed all path references across the codebase
+  - Converted all relative paths (../common/, ./api/) to absolute paths (/src/common/, /weekly/api/)
+  - Updated HTML back button links to use router paths
+  - Updated JS files to use absolute API paths
+  - Added router routes for API file access
+  - Added assignments/update route
 - **2025-12-12**: Migrated from MySQL to PostgreSQL for Replit compatibility
 - Updated Config.php to use environment variables for database connection
 - Fixed all include paths to use __DIR__ for proper routing

@@ -58,7 +58,7 @@ if (!isLoggedIn() || !isAdmin())
 
         <div class="button-group">
             <button type="submit" id="save-edit-button">Update Assignment</button>
-            <button type="button" onclick="window.location.href='admin.html'">Cancel and Back</button>
+            <button type="button" onclick="window.location.href='/assignments/admin'">Cancel and Back</button>
         </div>
     </fieldset>
 </form>
@@ -97,7 +97,7 @@ if (!isLoggedIn() || !isAdmin())
             try
             {
                 // Fetch data for the specific assignment
-                const response = await fetch(`api/index.php?resource=assignments&id=${assignmentId}`);
+                const response = await fetch(`/assignments/api/index.php?resource=assignments&id=${assignmentId}`);
                 
                 if (!response.ok) {
                     const errorText = await response.text();
@@ -144,7 +144,7 @@ if (!isLoggedIn() || !isAdmin())
             try 
             {
               
-                const response = await fetch(`api/index.php?resource=assignments&id=${assignmentId}`, {
+                const response = await fetch(`/assignments/api/index.php?resource=assignments&id=${assignmentId}`, {
                     method: 'PUT',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(updatedAssignment)
@@ -166,7 +166,7 @@ if (!isLoggedIn() || !isAdmin())
                     displayStatus('Assignment updated successfully! Redirecting...', false);
                     setTimeout(() => 
                     {
-                        window.location.href = 'admin.html';
+                        window.location.href = '/assignments/admin';
                     }, 1000); 
                 } 
                 else 

@@ -133,7 +133,7 @@ function createWeekRow(week) {
 
   const titleCell = document.createElement("td");
   const link = document.createElement("a");
-  link.href = `./details.php?id=${week.id}`;
+  link.href = `/weekly/details?id=${week.id}`;
   link.textContent = week.title;
   link.className = "week-title-link";
   titleCell.appendChild(link);
@@ -203,7 +203,7 @@ async function handleAddWeek(event) {
   };
 
   try {
-    const res = await fetch("./api/index.php", {
+    const res = await fetch("/weekly/api/index.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -242,7 +242,7 @@ function handleTableClick(event) {
   if (target.classList.contains("delete-btn")) {
     const id = Number(target.dataset.id);
 
-    fetch(`./api/index.php?id=${id}`, { method: "DELETE" })
+    fetch(`/weekly/api/index.php?id=${id}`, { method: "DELETE" })
       .then(res => res.json())
       .then(result => {
         if (!result.success) {
@@ -304,7 +304,7 @@ async function handleEditSubmit(event) {
   };
 
   try {
-    const res = await fetch("./api/index.php", {
+    const res = await fetch("/weekly/api/index.php", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -357,7 +357,7 @@ async function importJsonWeeksOnce(jsonWeeks) {
   }
 
   try {
-    const res = await fetch("./api/index.php");
+    const res = await fetch("/weekly/api/index.php");
     const dbResult = await res.json();
 
     const existingWeeks = dbResult.success ? dbResult.data : [];
@@ -417,11 +417,11 @@ async function importJsonCommentsOnce() {
 
   try {
 
-    const res = await fetch("./api/comments.json");
+    const res = await fetch("/weekly/api/comments.json");
     const allComments = await res.json();
 
 
-    const usersRes = await fetch("./api/index.php?resource=users");
+    const usersRes = await fetch("/weekly/api/index.php?resource=users");
     const usersData = await usersRes.json();
 
     const users = usersData.success ? usersData.data : [];
@@ -453,7 +453,7 @@ async function importJsonCommentsOnce() {
         }
 
 
-        await fetch("./api/index.php?action=weekly_comments", {
+        await fetch("/weekly/api/index.php?action=weekly_comments", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -479,13 +479,13 @@ async function importJsonCommentsOnce() {
 
 async function loadAndInitialize() {
   try {
-    const response = await fetch("./api/weeks.json");
+    const response = await fetch("/weekly/api/weeks.json");
     const jsonWeeks = await response.json();
 
     await importJsonWeeksOnce(jsonWeeks);
     await importJsonCommentsOnce();
 
-    const res = await fetch("./api/index.php");
+    const res = await fetch("/weekly/api/index.php");
     const result = await res.json();
 
     if (result.success) {
@@ -517,6 +517,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!btn) return;
 
   btn.addEventListener("click", () => {
-    window.location.href = "../auth/AdminPortal.php";
+    window.location.href = "/admin";
   });
 });
