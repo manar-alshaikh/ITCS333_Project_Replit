@@ -95,6 +95,17 @@ function validateField(input, type = "text") {
       showError(input, "Please select a date.");
       return false;
     }
+    
+    const selectedDate = new Date(value);
+    const year = selectedDate.getFullYear();
+    const minYear = 2020;
+    const maxYear = 2030;
+    
+    if (year < minYear || year > maxYear) {
+      showError(input, `Date must be between ${minYear} and ${maxYear}.`);
+      return false;
+    }
+    
     clearError(input);
     return true;
   }
