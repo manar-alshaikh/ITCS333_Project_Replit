@@ -38,7 +38,7 @@ $query = $_GET;
 
 function getAllResources($db) {
     $sql = "SELECT id, title, description, external_url, created_at 
-            FROM course_resources WHERE is_active = 1";
+            FROM course_resources WHERE is_active = TRUE";
 
     // Search
     if (isset($_GET['search'])) {

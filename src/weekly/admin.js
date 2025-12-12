@@ -388,7 +388,7 @@ async function importJsonWeeksOnce(jsonWeeks) {
         links: w.links || []
       };
 
-      const insertRes = await fetch("./api/index.php", {
+      const insertRes = await fetch("/api/weekly", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
