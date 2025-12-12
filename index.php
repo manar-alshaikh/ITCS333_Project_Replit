@@ -125,9 +125,9 @@ switch ($path) {
     // 404 ERROR
     // ----------------------------------------------
 
-    default:
-        http_response_code(404);
-        echo "<h1>404 - Page Not Found</h1>";
-        echo "<p>No route matches: {$path}</p>";
-        break;
+  default:
+    http_response_code(404);
+    include __DIR__ . "/src/errors/404.php";
+    break;
+
 }
